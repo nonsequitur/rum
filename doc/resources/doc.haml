@@ -1,0 +1,160 @@
+%html(xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en")
+  %head
+    %meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
+    %link(rel="stylesheet" href="resources/screen.css" type="text/css" media="screen")
+    %link(rel="stylesheet" href="resources/highlight.css" type="text/css" media="screen")
+
+  %body
+    %img{id: "logo", src: "resources/logo.png"}
+    #nav
+      %ul
+        %li
+          %a{href: "#"} Intro
+        %li
+          %a{href: "#installation"} Installation
+        %li
+          %a{href: "#coding"} Coding
+        %li
+          %a{href: "#example"} Example
+        %li
+          %a{href: "#reference"} Reference
+        %li
+          %a{href: "#development"} Development
+    #wrapper
+      #intro Rum is a cross-platform Hotkey and Macro utility, built in Ruby.<br />Not yet running on Linux, it’s progressing steadily on the Mac (MacRuby) and is fully supported on Windows.
+
+      %img{src: "resources/screenshot.png"}
+      #screenshot-sub
+      #intro-code
+        #top
+        #content
+          %img{id: "flash", src: "resources/flash.png"}
+          #sshot-sub This snippet powers the above screenshot.
+          -# #sshot-sub The above screenshot is powered by this snippet.
+          = intro
+        #bottom
+        #intro-code-sub Rum configuration files are regular Ruby scripts, like the above.<br /> Running Rum is as easy as calling <span class="code">ruby my_rum_config_file.rb</span> from the command line.<br />(Or <span class="code">macruby -rubygems my_rum_config_file.rb</span> on the Mac.)
+      #guide
+        #installation
+          %a{name: "installation"}
+            %h1 Installation
+          #gem
+            #regulargem
+              %span{class: "code"} gem install rum
+            #macgem
+              %span{class: "code"} macgem install rum
+              %div
+                -# %span{class: "onthemac"} On the Mac
+            .clear
+
+          %p{id: "current_version"}
+            Current version:
+            = current_version
+            %span{id: "changelog"} (<a href="https://github.com/nonsequitur/rum/blob/master/CHANGELOG">Changelog</a>)
+
+          #growl
+            %h2 Recommended: Growl
+            %ul
+              %li Get Growl: <a href="http://growl.info/">Mac</a>, <a href="http://www.growlforwindows.com/gfw/">Windows</a>
+              %li To use Growl in Rum: Add <span class="code">Gui.use Gui::Growl</span> to your Rum config.
+            #growl-explanation
+              %h3 Why Growl?
+              Notification bubbles are a convenient alternative to focus-stealing message boxes.
+              Some higher level Rum methods only work smoothly with Growl-style notifications.
+              Currently, Growl is the only notification system supported by Rum.
+
+        #coding
+          %a{name: "coding"}
+            %h1 Coding in Rum
+          Rum encourages an interactive approach to coding and a fast code-and-feedback cycle.
+          %h2 Core techniques
+          %ul{id: "core-techniques"}
+            %li
+              %h3 rum-client REPL
+              %p Add <span class="code">Rum::Server.start</span> to your Rum config.
+              %p Call <span class="code">rum-client -i</span> from the command line to start an IRB-session inside a running Rum instance. IRB Completion is fully supported.
+              %p Nearly all snippets in this guide can be evaluated interactively.
+
+              %p Set the environment variable <span class="code">RUM_PORT</span> to change the port on which client and server connect.
+
+              %p
+                %h3 rum-client in emacs:
+                %ul
+                  %li Get the latest Inf-Ruby via <a href="http://marmalade-repo.org/packages/inf-ruby">ELPA</a>
+                  %li
+                    Add the following to your Emacs config:
+                    %pre{id: "inf_ruby_setup"}= inf_ruby_setup
+                  %li
+                    Run <span class="code">M-x rum-client</span>
+                #auto-completion
+                  %h4 Auto-completion
+                  %img{id: "auto-completion",
+                       src: "resources/emacs-auto-completion.png"}
+                  -# %p The Inf-Ruby backend for Company-Mode offers auto-completion for Inf-Ruby buffers.
+                  %p
+                    Company-Mode features auto-completion for IRB sessions.<br />
+                    <a href="http://www.emacswiki.org/emacs/InfRubyCompany">See here for installation instructions</a>.
+
+            %li
+              %%h3 Rum.restart
+              Restarts Rum.
+              Bind it to a key, like <span class="code">'shift f1'.do { Rum.restart }</span>
+
+          Run Rum with this basic, REPL-enabled setup to get started:
+          #basic= basic
+
+          #example
+            %a{name: "example"}
+              %h1 Extended Example
+            = example
+
+
+          -# #example-configs
+
+          %a{name: "reference"}
+            %h1 Reference
+          %p
+            This section is also available as a Ruby source file and can be
+            conveniently viewed in a text editor.<br />
+            Call <span class="code">Rum.reference</span> or manually open
+            <span class="code">rum_dir/doc/reference.rb</span>.
+      #reference_wrapper= reference
+
+      #development
+        %a{name: "development"}
+          %h1 Development
+        %p
+          Patches and suggestions are most appreciated.
+        %p
+          There's a <a href="https://github.com/nonsequitur/rum-dev/blob/master/rum-development.org">low-ceremony
+          to-do list</a> to coordinate the development
+          of larger-scale features.<br />
+          -# Please check this out if you're interested in contributing.
+          Feel free to have a look if you're interested in contributing.
+          -# Instructions on how to contribute can be found inside the list.
+        %h2 Building
+        %p
+          %span{class: "code"} rake build
+          builds the extension and the document.
+        %p
+          %span{class: "code"} rake ext
+          builds just the extension.
+        %p
+          %span{class: "code"} rake doc
+          builds this document. Requires Pygments.
+        %h3 Mac specifics:
+        %p
+          XCode required.
+        %h3 Windows specifics:
+        %p
+          Visual Studio required. (Out-of-the-box MinGW support coming soon.)
+        %p
+          You need to setup the Visual Studio build environment before running the rake commands.<br />Call <span class="code">"%programfiles%\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86</span> from your Windows terminal.
+        %p
+          You might have to delete the following lines from <span class="code">ruby_dir/include/ruby-1.9.x/i386-mswin32/ruby/config.h</span> to work around a compiler error:
+          %pre
+            \#if _MSC_VER != 1200
+            \#error MSC version unmatch: _MSC_VER: 1200 is expected.
+            \#endif
+        #footer
+      

@@ -1,0 +1,124 @@
+#!/usr/bin/env ruby
+
+module Client
+  module_function
+
+  def connect
+    @remote = Rum::Remote.new
+  rescue SystemCallError
+    puts "Rum Client: Connecting failed. Rum Server not responding."
+  end
+
+  class NilResponse < StandardError; end
+  
+  def eval(code)
+    if connect
+      result = @remote.eval(code) or raise NilResponse
+      @remote.disconnect
+      result
+    end
+  rescue SystemCallError, NilResponse # Connection Error
+    @remote.disconnect
+    puts "Rum Client: Connection to Rum Server lost."
+  end
+end
+
+module RemoteIRB
+  module Completion
+    def Completion.candidates(completor_call)
+      eval(Client.eval(completor_call))
+    rescue Exception # Explicitly rescue Exception to catch eval errors.
+    end
+    
+    def Completion.setup
+      Readline.completion_proc = lambda do |input|
+        candidates("IRB::InputCompletor::CompletionProc.call(#{input.dump})")
+      end
+    end
+  end
+
+  def self.load_irb
+    require 'irb'
+
+    # Borrowed from Hijack
+    const_set 'Workspace', Class.new(IRB::WorkSpace)
+    Workspace.class_eval do 
+      def evaluate(context, statements, file = __FILE__, line = __LINE__)
+        if completor_call = statements[/^puts (IRB::InputCompletor.*)/, 1]
+          puts Completion.candidates(completor_call)
+        elsif statements.strip =~ /^exit/
+          exit
+        else
+          Client.eval(statements)
+        end
+      end
+    end
+
+    IRB::Context.class_eval do
+      def set_last_value value
+        @last_value = value
+        # Setting the last value variable '_' on the server is
+        # pointless. So skip it.
+      end
+    end
+  end
+
+  def self.start
+    load_irb
+    ARGV.replace ["--simple-prompt"] if ARGV.empty? # todo
+    IRB.setup(nil)
+    workspace = Workspace.new
+    @CONF = IRB.instance_variable_get(:@CONF)
+    @CONF[:INSPECT_MODE] = false
+    irb = IRB::Irb.new(workspace)
+    Completion.setup
+    @CONF[:IRB_RC].call irb.context if @CONF[:IRB_RC]
+    @CONF[:MAIN_CONTEXT] = irb.context
+    @CONF[:PROMPT_MODE] = :SIMPLE
+    trap('SIGINT') { irb.signal_handle }
+    catch(:IRB_EXIT) { irb.eval_input }
+  end
+end
+
+def evaluate code
+  # require_relative is missing on MacRuby
+  require File.join(File.dirname(__FILE__), '..', 'lib/rum/remote')
+  if code and not code.empty?
+    if (result = Client.eval(code))
+      puts result
+    else
+      exit 1
+    end
+  end
+end
+
+def switch_to_mri_ruby
+  puts "The Rum REPL doesn't yet work with MacIrb. Switching to default Ruby."
+  exec('ruby', __FILE__, *ARGV)
+end
+
+case not ARGV.empty? and ARGV.first.chomp
+when '-h', '--help'
+  puts 'Usage:
+-i, --interactive       start a Rum IRB session
+-e, --evaluate CODE     evaluate CODE
+CODE                    evaluate CODE
+
+Evaluates code from standard input if arguments are omitted.
+
+You can set the environment variable RUM_PORT to change the
+port that is used by Rum-Client and Rum-Server.'
+  
+when '-i', '--interactive'
+  switch_to_mri_ruby if RUBY_DESCRIPTION =~ /MacRuby/
+  require_relative '../lib/rum/remote'
+  ARGV.shift
+  RemoteIRB.start
+when '-e', '--evaluate'
+  ARGV.shift
+  evaluate ARGV.join(' ')
+when /\S+/
+  evaluate ARGV.join(' ')
+else
+  evaluate gets(nil)
+end

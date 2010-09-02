@@ -1,0 +1,5 @@
+*.so
+/ext/mac/keyboard_hook/build/*
+/lib/rum/mac/keyboard_hook/*
+/lib/rum/mac/gui/CocoaDialog.app/*
+doc/doc.html
