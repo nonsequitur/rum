@@ -77,6 +77,19 @@ module Rum
       Gui.message error_message, :sticky, &callback
     end
 
+    def parse_stack_frame(frame)
+      if match = frame.match(/^(.+?):(\d+)/)
+        file, line = match.captures
+        # Different file names in IRB stackframes:
+        # Ruby 1.9.1: (eval)
+        # Ruby 1.9.2: <main>
+        # MacRuby 0.10: /working_directory/(eval)
+        if file !~ /\(eval\)$/ and file != '<main>'
+          [file, line.to_i]
+        end
+      end
+    end
+
     def switch_worker_thread
       return unless Thread.current == @worker_thread
       old = @work_queue
