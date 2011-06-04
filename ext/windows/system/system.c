@@ -240,7 +240,7 @@ void Init_system() {
   input_box_initialize(GetModuleHandle(NULL));
   autohotkey_stuff_initialize(GetCurrentThreadId());
   
-  mSystem        = rb_define_module_under(rb_define_module("Rum"), "System");
+  mSystem    = rb_define_module_under(rb_define_module("Rum"), "System");
   mDesktop   = rb_define_module_under(mSystem, "Desktop");
   mScreen    = rb_define_module_under(mSystem, "Screen");
   mClipboard = rb_define_module_under(mSystem, "Clipboard");
