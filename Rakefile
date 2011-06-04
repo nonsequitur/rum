@@ -85,16 +85,19 @@ namespace :gem do
   end
 
   task :windows do
-    common_spec do |spec| 
-      spec.files    = FileList['**/*'].exclude(*CLEAN.to_a, *MAC_BINARIES)
-      spec.add_dependency('ruby_gntp', '>= 0.3.4')
-      spec.add_dependency('win32-api', '>= 1.4.8')
-      spec.add_dependency('win32-clipboard', '>= 0.5.2')
-      # mingw32 and mswin32 binaries can be used interchangeably
-      spec.platform = 'x86-mingw32'
-      build(spec)
-      spec.platform = 'x86-mswin32-60'
-      build(spec)
+    # mingw32 and mswin32 binaries can be used interchangeably
+    platforms = ['x86-mingw32', 'x86-mswin32-60']
+    files = FileList['**/*'].exclude(*CLEAN.to_a, *MAC_BINARIES)
+    
+    platforms.each do |platform|
+      common_spec do |spec| 
+        spec.files = files
+        spec.add_dependency('ruby_gntp', '>= 0.3.4')
+        spec.add_dependency('win32-api', '>= 1.4.8')
+        spec.add_dependency('win32-clipboard', '>= 0.5.2')
+        spec.platform = platform
+        build(spec)
+      end
     end
   end
 
