@@ -309,7 +309,7 @@ System.applescript
 
 # If you have a long running action that may run in parallel with
 # other actions call 'Rum.switch_worker_thread'. Action execution is
-# then resumed on another thread.
+# then resumed in another thread.
 'ctrl a'.do { Rum.switch_worker_thread; long_running_stuff }
 
 # The following is also possible...
