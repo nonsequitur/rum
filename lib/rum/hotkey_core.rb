@@ -37,7 +37,7 @@ module Rum
       @ids.values.uniq
     end
 
-    def lookup_id id
+    def lookup_key id
       @ids[id]
     end
 
@@ -428,7 +428,7 @@ module Rum
 
     def process_event event
       puts event
-      @key = @layout.lookup_id(event.id)
+      @key = @layout.lookup_key(event.id)
       @down = event.down?
       unless @key
         puts "Unknown Key\n"
