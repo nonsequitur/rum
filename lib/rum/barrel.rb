@@ -110,7 +110,7 @@ module Rum
         
         cmd = Command.new(name, block)
         tags.each do |tag|
-          commands_for_tag = (commands[tag] ||= {})
+          commands_for_tag = (@commands[tag] ||= {})
           commands_for_tag[name] = cmd
         end
       end
