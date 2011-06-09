@@ -169,8 +169,8 @@ module Rum
       end
     end
 
-    def show_definition
-      @location.show if @location
+    def visit_definition
+      @location.visit if @location
     end
   end
 

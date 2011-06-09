@@ -32,7 +32,7 @@ type '(ctrl (shift a))' # Key combinations
 # 5. Help and introspection
 # Prompts you to enter a hotkey and then jumps to its
 # definition in your text editor.
-'shift f2'.do { Rum.show_hotkey }
+'shift f2'.do { Rum.visit_hotkey }
 
 # Asks you to enter an arbitrary hotkey and inserts a hotkey
 # definition snippet.

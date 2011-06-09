@@ -323,7 +323,7 @@ System.applescript
 #### 5. Help, introspection
 # Prompts you to enter a hotkey and then jumps to its
 # definition via Gui.open_file.
-Rum.show_hotkey
+Rum.visit_hotkey
 # (Requires you to register your text-editor, see Gui.open_file above.)
 
 # Asks you to enter an arbitrary hotkey and inserts a hotkey

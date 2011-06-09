@@ -9,11 +9,11 @@ module Rum
     KeyReader.start(hotkey_processor, proc)
   end
 
-  def self.show_hotkey
+  def self.visit_hotkey
     read_key { |hotkey| Gui.message "'#{hotkey}' not active" }
     Action.hook = lambda do |action|
       KeyReader.remove_hooks
-      action.show_definition or Gui.message "Definition location unkown."
+      action.visit_definition or Gui.message "Definition location unkown."
       # Must return true for the key that triggered the action to be
       # retained by the processor.
       true

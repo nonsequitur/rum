@@ -27,7 +27,7 @@ module Rum
       end
     end
 
-    def show
+    def visit
       Gui.open_file(@file, @line)
       true
     end
