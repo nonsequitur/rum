@@ -64,7 +64,7 @@ module Rum
 
       def visit
         dir = current
-        Dopus.go dir if dir
+        Gui.goto dir if dir
       end
 
       def select
