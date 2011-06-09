@@ -76,9 +76,10 @@ module Rum
 
   module Commands
     class Command
-      def initialize(name, proc)
+      def initialize(name, proc, location)
         @name = name
         @proc = proc
+        @location = location
       end
 
       def to_s
@@ -87,6 +88,10 @@ module Rum
 
       def run
         @proc.call
+      end
+
+      def visit
+        @location.visit if @location
       end
     end
     
@@ -107,8 +112,9 @@ module Rum
           apps = tags.select { |tag| tag.is_a? App }
           apps.each { |app| hotkey.do(app, &block) }
         end
-        
-        cmd = Command.new(name, block)
+
+        location = FileLocation.from_stack_frame(caller.first)
+        cmd = Command.new(name, block, location)
         tags.each do |tag|
           commands_for_tag = (@commands[tag] ||= {})
           commands_for_tag[name] = cmd
@@ -124,8 +130,24 @@ module Rum
       end
 
       def select(tag=nil)
-        cmd = Gui.choose(nil, self[tag])
+        cmd = select_command(self[tag])
         cmd.run if cmd
+      end
+
+      TIMER_DURATION = 10
+      def select_command(commands)
+        cmd = Gui.choose(nil, commands)
+        if @visit_timer
+          timer_active = (Time.now-@visit_timer) <= TIMER_DURATION
+          cmd.visit if cmd and timer_active
+          @visit_timer = nil
+        else
+          cmd
+        end
+      end
+
+      def visit_next_command
+        @visit_timer = Time.now
       end
 
       def for_active_window
@@ -136,7 +158,7 @@ module Rum
         if (dir = AppDir.get(exe))
           cmds.concat Path.contents(dir)
         end
-        if (chosen = Gui.choose(nil, cmds))
+        if (chosen = select_command(cmds))
           case chosen
           when String
             Path.run(dir + chosen)
