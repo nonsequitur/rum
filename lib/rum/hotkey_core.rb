@@ -64,6 +64,7 @@ module Rum
       @ids[id] = key
       @names[name] = key
       aliases.each { |key_alias| @aliases[key_alias] = key }
+      key
     end
 
     def alias key, key_alias
