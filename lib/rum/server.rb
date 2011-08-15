@@ -15,7 +15,6 @@ module Rum
         @server = TCPServer.new('127.0.0.1', Remote.default_port)
         puts "Server started."
         begin
-          @connection = nil
           loop do
             @connection = Remote::Connection.new(@server.accept)
             handle(@connection)
