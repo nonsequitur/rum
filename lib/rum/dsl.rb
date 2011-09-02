@@ -88,9 +88,7 @@ class String
     Rum.hotkey_set.add_translation(self, to, condition,
                                    FileLocation.from_stack_frame(caller.first))
   end
-end
 
-class String
   # Prepare a special version of #do that is only active when the user
   # calls #do for the first time.
   # After running Rum.setup it calls and restores the default version of #do.
