@@ -1,6 +1,6 @@
 include Rum
-include System
-include Keyboard
+include Rum::System
+include Rum::Keyboard
 
 module Rum
   class Action
@@ -32,20 +32,21 @@ module Rum
       true
     end
   end
-end
 
-module GuiMixin
-  # Delegating to Gui instead of directly including Gui avoids dealing
-  # with module hierarchy corner cases that appear when other modules
-  # are later dynamically included into Gui via Gui.use.
-  [:message, :alert, :read, :choose, :open_file, :browse, :goto].each do |method_name|
-    define_method(method_name) do |*args, &block|
-      Gui.send(method_name, *args, &block)
+  module GuiMixin
+    # Delegating to Gui instead of directly including Gui avoids dealing
+    # with module hierarchy corner cases that appear when other modules
+    # are later dynamically included into Gui via Gui.use.
+    [:message, :alert, :read, :choose, :open_file, :browse, :goto].each do |method_name|
+      define_method(method_name) do |*args, &block|
+        Gui.send(method_name, *args, &block)
+      end
+      private method_name
     end
-    private method_name
   end
 end
-include GuiMixin
+
+include Rum::GuiMixin
 
 def wait(timeout=5, interval=0.01)
   start = Time.new
