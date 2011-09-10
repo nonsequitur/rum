@@ -54,13 +54,7 @@ module Rum
       end
       pressed_keys.reverse_each { |key| up key }
     end
-
-    def send_key(key_alias, down)
-      if key = Rum.layout[key_alias]
-        System.send_key_event key, down
-      end
-    end
-
+    
     def down(key)
       send_key key, true
     end
@@ -74,6 +68,12 @@ module Rum
         System.send_keypress key
       elsif (key_sequence = Rum.layout.translations[char])
         type_sequence(key_sequence, slow)
+      end
+    end
+
+    def send_key(key_alias, down)
+      if key = Rum.layout[key_alias]
+        System.send_key_event key, down
       end
     end
   end
