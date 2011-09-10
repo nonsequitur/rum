@@ -55,9 +55,9 @@ module Rum
       pressed_keys.reverse_each { |key| up key }
     end
 
-    def send_key(key, down)
-      if id = Rum.layout[key]
-        System.send_key_event id, down
+    def send_key(key_alias, down)
+      if key = Rum.layout[key_alias]
+        System.send_key_event key, down
       end
     end
 
