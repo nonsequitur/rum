@@ -52,7 +52,7 @@ namespace :ext do
     end
 
     task :keyboard_hook => 'lib/rum/windows/keyboard_hook.so'
-    task :system            => 'lib/rum/windows/system.so'
+    task :system        => 'lib/rum/windows/system.so'
   end
   task :windows => ['windows:keyboard_hook', 'windows:system']
 
