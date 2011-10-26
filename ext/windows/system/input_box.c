@@ -77,7 +77,7 @@ static void input_box_submit(InputBox *box)
 {
   int input_length = (int)SendMessage(box->edit_control, EM_LINELENGTH, 0, 0);
   if (input_length){
-    // Provide the max number of chars to be copied as a word in the buffer.
+    // Provide the max number of chars to be copied to the buffer.
     *((LPWORD)box->result_text) = box->max_chars;
     // Although undocumented, the copied string is null-terminated.
     input_length = (WORD)SendMessage(box->edit_control, EM_GETLINE, 0,
