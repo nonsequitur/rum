@@ -66,6 +66,19 @@ static VALUE f_keybd_event(int argc, VALUE* argv, VALUE self)
   return Qnil;
 }
 
+static VALUE f_send_unicode_char_internal(VALUE self, VALUE character)
+{
+  INPUT inp[2];
+  memset(inp,0,sizeof(INPUT));
+  inp[0].type = INPUT_KEYBOARD;
+  inp[0].ki.dwFlags = KEYEVENTF_UNICODE;
+  inp[0].ki.wScan = *(LPCWSTR)RSTRING_PTR(character);
+  inp[1] = inp[0];
+  inp[1].ki.dwFlags |= KEYEVENTF_KEYUP;
+
+  return SendInput(2, inp, sizeof(INPUT)) ? Qtrue : Qfalse;
+}
+  
 /* Returns 'true' if successful, 'false' if not. */
 static VALUE ForceWindowToFront(VALUE self)
 {
@@ -248,6 +261,7 @@ void Init_system() {
   
   rb_define_method(mSystem, "enum_windows", enum_windows, 0);
   rb_define_method(mSystem, "keybd_event", f_keybd_event, -1);
+  rb_define_method(mSystem, "send_unicode_char_internal", f_send_unicode_char_internal, 1);
   rb_define_method(mSystem, "get_console_window", get_console_window, 0);
   rb_define_method(mSystem, "message_box_internal", message_box_internal, 2);
   rb_define_method(mSystem, "input_box_internal", input_box_internal, 3);

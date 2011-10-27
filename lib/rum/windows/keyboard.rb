@@ -13,6 +13,11 @@ module Rum
       release_core_modifiers unless args.include? :blind
       type_sequence_literally(key_sequence, args.include?(:slow))
     end
+    
+    def type_unicode(key_sequence, *args)
+      release_core_modifiers unless args.include? :blind
+      type_sequence_unicode(key_sequence, args.include?(:slow))
+    end
 
     def release_core_modifiers
       pressed = Rum.hotkey_processor.pressed_modifiers
@@ -49,6 +54,28 @@ module Rum
           up pressed_keys.pop
         else
           down_and_up(char, slow)
+        end
+        sleep 0.01 if slow
+      end
+      pressed_keys.reverse_each { |key| up key }
+    end
+    
+    def type_sequence_unicode(key_sequence, slow)
+      s = StringScanner.new(key_sequence)
+      pressed_keys = []
+      while (char = s.getch)
+        case char
+        when '\\'
+          (char = s.getch) and System.send_unicode_char(char)
+        when '('
+          key = s.scan(/[^() ]+/)
+          s.skip /\ /
+          down key
+          pressed_keys << key
+        when ')'
+          up pressed_keys.pop
+        else
+          System.send_unicode_char(char)
         end
         sleep 0.01 if slow
       end

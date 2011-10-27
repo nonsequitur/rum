@@ -15,6 +15,10 @@ module Rum
       send_key_event key, false
     end
 
+    def send_unicode_char char
+      send_unicode_char_internal(char.encode(Encoding::UTF_16LE))
+    end
+
     def active_window_handles
       Enumerator.new(self, :enum_windows)
     end

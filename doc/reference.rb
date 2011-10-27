@@ -177,6 +177,9 @@ type '(keydown a)'
 # Provide the :blind flag to bypass auto-releasing
 'ctrl a'.do { type 'w', :blind } # 'ctrl' might still be pressed when 'w' is sent.
 
+## Windows-specific: Unicode input
+# Sends unicode input. Supports the key combination syntax from 'type'.
+type_unicode '۩—↑ (ctrl ۞)'
 
 ## Windows-specific: Extended keys
 # Sends 'alt' with the 'extended' flag set.
