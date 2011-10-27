@@ -81,7 +81,11 @@ module Rum
       Clipboard.preserve { Clipboard.get_selection }
     end
 
-    class Window
+    def kill_task exe_name
+      system("taskkill /F /IM #{exe_name}.exe")
+    end
+
+   class Window
       include System
       
       attr_reader :handle
@@ -188,7 +192,7 @@ module Rum
       end
 
       def kill_task
-        system("taskkill /F /IM #{exe_name}.exe")
+        System.kill_task exe_name
       end
       
       def report
