@@ -20,7 +20,11 @@ module Rum
     end
     
     def self.run path
-      start path
+      if File.extname(path) == '.rb'
+        eval(IO.read(path))
+      else
+        start path
+      end
     end
 
     def self.select_and_run dir
