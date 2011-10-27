@@ -44,7 +44,7 @@ module Rum
       while (char = s.getch)
         case char
         when '\\'
-          down_and_up(s.getch, slow)
+          (char = s.getch) and down_and_up(char, slow)
         when '('
           key = s.scan(/[^() ]+/)
           s.skip /\ /
