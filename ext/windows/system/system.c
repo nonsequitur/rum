@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <winuser.h>
 #include <tlhelp32.h>
+#include <Psapi.h>
 #include "autohotkey_stuff.h"
 #include "input_box.h"
 #include "clipboard_watcher.h"
@@ -99,44 +100,22 @@ static DWORD process_id(VALUE window)
   return process_id;
 }
 
-static void process_module(VALUE window, MODULEENTRY32 *module) {
-  DWORD processID = process_id(window);
-  
-  // Take a snapshot of the modules of this process
-  HANDLE moduleSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, processID);
-
-  //Get the first module
-  module->dwSize = sizeof(MODULEENTRY32);
-  Module32First(moduleSnapshot, module);
-}
-
-static void get_exe_path(MODULEENTRY32 *module, char *buffer) {
-  strcpy(buffer, module->szExePath);
-}
-
-static void get_exe_name(MODULEENTRY32 *module, char *buffer) {
-  strcpy(buffer, module->szModule);
-  buffer[strlen(buffer) - 4] = '\0'; /* Remove .exe suffix */
-}
-
-static void access_window_process_data(VALUE window, void fn(MODULEENTRY32 *module, char *buffer), char *buffer) {
-  MODULEENTRY32 module = {0};
-  process_module(window, &module);
-  (*fn)(&module, buffer);
-}
-
-static VALUE exe_name(VALUE self)
+static VALUE exe_path_internal(VALUE self)
 {
-  char buffer[MAX_MODULE_NAME32 + 1];
-  access_window_process_data(self, &get_exe_name, buffer);
-  return rb_str_new2(buffer);
-}
-
-static VALUE exe_path(VALUE self)
-{
-  char buffer[MAX_PATH];
-  access_window_process_data(self, &get_exe_path, buffer);
-  return rb_str_new2(buffer);
+    DWORD window_process_id = process_id(self);
+    HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION,
+                                 FALSE,
+                                 window_process_id);
+    #define BUFFER_LENGTH 512
+    WCHAR buffer[BUFFER_LENGTH];
+    DWORD num_chars = GetProcessImageFileNameW(process,
+                                                 buffer,
+                                                 BUFFER_LENGTH);
+    if (num_chars) {
+      return rb_str_new(buffer, sizeof(WCHAR) * num_chars);
+    } else {
+      return Qnil;
+    }    
 }
 
 static LPRECT get_window_rect(VALUE window, LPRECT rect)
@@ -267,8 +246,7 @@ void Init_system() {
   rb_define_method(mSystem, "input_box_internal", input_box_internal, 3);
 
   rb_define_method(cWindow, "show", ForceWindowToFront, 0);
-  rb_define_method(cWindow, "exe_path", exe_path, 0);
-  rb_define_method(cWindow, "exe_name", exe_name, 0);
+  rb_define_method(cWindow, "exe_path_internal", exe_path_internal, 0);
   rb_define_method(cWindow, "left", left, 0);
   rb_define_method(cWindow, "right", right, 0);
   rb_define_method(cWindow, "top", top, 0);

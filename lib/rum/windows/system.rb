@@ -203,6 +203,17 @@ module Rum
         "Title: #{title}\nClass: #{class_name}"
       end
 
+      def exe_path
+        exe_path_internal.
+          force_encoding(Encoding::UTF_16LE).
+          encode(Encoding::UTF_8).
+          gsub('\\', '/')
+      end
+
+      def exe_name
+        File.basename(exe_path, '.exe')
+      end
+
       def self.[] arg, class_name=nil
         if arg.is_a? Hash
           WindowMatcher.new(arg[:title], arg[:class_name])
