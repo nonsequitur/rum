@@ -22,16 +22,21 @@ module Rum
 
     attr_accessor :path, :binary, :matcher
 
-    def initialize(path, *matcher)
-      @path = append_path_to_programfiles_if_relative(path)
+    def initialize(path, *args)
+      x64 = args.delete :x64
+      @path = append_path_to_programfiles_if_relative(path, x64)
       @binary = File.basename(@path).sub(/\.exe$/, '').downcase
-      @matcher = WindowMatcher.new(*matcher)
+      @matcher = WindowMatcher.new(*args)
       App.add(self)
     end
 
-    def append_path_to_programfiles_if_relative(path)
+    PROGRAM_FILES     = ENV['PROGRAMFILES'].gsub('\\', '/')
+    PROGRAM_FILES_X64 = ENV['ProgramW6432'].gsub('\\', '/')
+
+    def append_path_to_programfiles_if_relative(path, x64)
       if path !~ /^\w:|^%/
-        path = File.join(ENV['PROGRAMFILES'].gsub("\\", '/'), path)
+        program_files = x64 ? PROGRAM_FILES_X64 : PROGRAM_FILES
+        path = File.join(program_files, path)
       end
       path
     end
