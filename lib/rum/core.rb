@@ -60,8 +60,8 @@ module Rum
     end
 
     def display_exception(exception)
-      error_message = ["#{exception.class}:", exception,
-                       '', *exception.backtrace].join("\n")
+      error_message = ["#{exception.class}:\n#{exception}",
+                       *exception.backtrace].join("\n\n")
 
       file, line = parse_stack_frame(exception.backtrace.first)
       if file
