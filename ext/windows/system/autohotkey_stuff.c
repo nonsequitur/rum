@@ -7,6 +7,11 @@ void autohotkey_stuff_initialize(DWORD main_thread_id)
   g_MainThreadID = main_thread_id; 
 }
 
+static void key_down_up(BYTE vkcode) {
+    keybd_event(vkcode, 0, 0, 0);
+    keybd_event(vkcode, 0, KEYEVENTF_KEYUP, 0);
+}
+
 HWND AttemptSetForeground(HWND aTargetWindow, HWND aForeWindow)
 {
 
@@ -199,10 +204,8 @@ HWND SetForegroundWindowEx(HWND aTargetWindow)
       // but later, after the hotkey is released, it can be.  So perhaps this is being
       // caused by the fact that the user has keys held down (logically or physically?)
       // Releasing those keys with a key-up event might help, so try that sometime:
-      /* Remarks from Rum: The following two lines are disabled since KeyEvent
-         is not implemented: */
-      /* KeyEvent(KEYDOWNANDUP, VK_MENU); */
-      /* KeyEvent(KEYDOWNANDUP, VK_MENU); */
+        key_down_up(VK_LMENU);
+        key_down_up(VK_LMENU);
       //KeyEvent(KEYDOWN, VK_LWIN)                    ;
       //KeyEvent(KEYDOWN, VK_TAB)                     ;
       //KeyEvent(KEYUP, VK_TAB)                       ;
