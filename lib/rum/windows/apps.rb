@@ -11,15 +11,11 @@ end
 Photoshop = App.new('Adobe/Adobe Photoshop CS5.1 (64 Bit)/Photoshop', nil, 'Photoshop', :x64)
 class << Photoshop
   def next_blend_mode
-    if Rum.layout['ö'] # german layout
-      type '(shift 0)'
-    else
-      type '(shift +)'
-    end
+    type '(shift (add))'
   end
 
   def previous_blend_mode
-    type '(shift -)'
+    type '(shift (subtract))'
   end
 end
 
