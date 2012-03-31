@@ -96,7 +96,8 @@ module Rum
           break if @stop
           new = active_window
           if new != old
-            Gui.message new.report
+            window_report = new.report
+            Gui.message(window_report) { System::Clipboard.set window_report }
             old = new
           end
           sleep 0.1
