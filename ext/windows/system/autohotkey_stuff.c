@@ -1,6 +1,6 @@
 #include <windows.h>
 
-DWORD g_MainThreadID;
+static DWORD g_MainThreadID;
 
 void autohotkey_stuff_initialize(DWORD main_thread_id)
 {
