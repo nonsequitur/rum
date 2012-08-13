@@ -89,14 +89,16 @@ module Rum
     def parse_stack_frame(frame)
       if match = frame.match(/^(.+?):(\d+)/)
         file, line = match.captures
-        # Different file names in IRB stackframes:
-        # Ruby 1.9.1: (eval)
-        # Ruby 1.9.2: <main>
-        # MacRuby 0.10: /working_directory/(eval)
-        if file !~ /\(eval\)$/ and file != '<main>'
-          [file, line.to_i]
-        end
+        [file, line.to_i] if physical_file? file
       end
+    end
+
+    def physical_file? file
+      # Different file names in IRB stackframes:
+      # Ruby 1.9.1: (eval)
+      # Ruby 1.9.2: <main>
+      # MacRuby 0.10: /working_directory/(eval)
+      file !~ /\(eval\)$/ and file != '<main>'
     end
   end
 
