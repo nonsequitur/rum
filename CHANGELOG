@@ -1,3 +1,12 @@
+= 0.0.3
+=== 2012/11/24
+* Added Emacs 24 support in EmacsClient
+* Mac: OS X 10.8 support
+* Minor tweaks and fixes
+= 0.0.2
+=== 2012/8/13
+* Windows: Method 'Keyboard::type_unicode' for sending unicode keyboard input
+* Windows: Add 64-bit compatibility for App paths and 'Window#exe_path/exe_name'
 = 0.0.1
 === 2011/06/4
 * Hello World!

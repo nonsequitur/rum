@@ -2,7 +2,7 @@ require 'rubygems'
 
 Gem::Specification.new do |spec|
   spec.name       = 'rum'
-  spec.version    = '0.0.1'
+  spec.version    = '0.0.3'
   spec.author     = 'nonsequitur'
   spec.license    = 'MIT'
   spec.homepage   = 'http://nonsequitur.github.com/rum'
