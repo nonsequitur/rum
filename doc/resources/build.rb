@@ -1,5 +1,7 @@
 require 'haml'
 
+Encoding.default_external = Encoding::UTF_8
+
 class Doc
   module Pygmentize
     Bin = if RUBY_PLATFORM =~ /mswin|mingw/ and ENV['USER'] == 'nonsequitur'
