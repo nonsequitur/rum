@@ -100,10 +100,10 @@ module Rum
     end
   end
 
-  WorkingDir = Dir.pwd
+  InitialWorkingDir = Dir.pwd
   
   def restart
-    Dir.chdir WorkingDir
+    Dir.chdir InitialWorkingDir
     if Thread.current == Rum::Server.thread
       Thread.new do
         sleep 0.01 # Allow server to respond. Slightly hacky.
