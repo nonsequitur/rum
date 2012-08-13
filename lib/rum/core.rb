@@ -77,6 +77,15 @@ module Rum
       Gui.message error_message, :sticky, &callback
     end
 
+    def switch_worker_thread
+      return unless Thread.current == @worker_thread
+      old = @work_queue
+      new = @work_queue = Action.work_queue = Queue.new
+      new.enq(old.deq) until old.length == 0
+      @worker_thread = start_worker_thread(new)
+      old.enq nil # Signal the worker thread to stop
+    end
+
     def parse_stack_frame(frame)
       if match = frame.match(/^(.+?):(\d+)/)
         file, line = match.captures
@@ -88,15 +97,6 @@ module Rum
           [file, line.to_i]
         end
       end
-    end
-
-    def switch_worker_thread
-      return unless Thread.current == @worker_thread
-      old = @work_queue
-      new = @work_queue = Action.work_queue = Queue.new
-      new.enq(old.deq) until old.length == 0
-      @worker_thread = start_worker_thread(new)
-      old.enq nil # Signal the worker thread to stop
     end
   end
 
