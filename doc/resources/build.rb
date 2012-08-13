@@ -226,7 +226,7 @@ EOF
   end
 
   def save
-    File.open(@output, 'w') { |f| f.write @doc }
+    File.open(@output, 'wb') { |f| f.write @doc }
   end
 
   def build
