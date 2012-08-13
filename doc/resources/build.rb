@@ -10,7 +10,7 @@ class Doc
           else
             'pygmentize'
           end
-    Cmd = "#{Bin} -O encoding=utf-8 -l ruby -f html"
+    Cmd = "#{Bin} -l ruby -f html"
 
     def self.file file
       fix_pygments_output(`#{Cmd} #{file}`)
