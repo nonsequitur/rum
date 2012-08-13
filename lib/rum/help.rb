@@ -13,7 +13,8 @@ module Rum
     read_key { |hotkey| Gui.message "'#{hotkey}' not active" }
     Action.hook = lambda do |action|
       KeyReader.remove_hooks
-      action.visit_definition or Gui.message "Definition location unkown."
+      action.visit_definition or Gui.message "Can't visit definition.\n"\
+                                             "Hotkey was not defined in a file."
       # Must return true for the key that triggered the action to be
       # retained by the processor.
       true
