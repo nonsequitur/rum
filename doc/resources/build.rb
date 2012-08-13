@@ -25,9 +25,8 @@ class Doc
     end
 
     def self.fix_pygments_output str
-      # Bug in Pygments 1.3.1: 'type' is no Ruby builtin
-      str.gsub('<span class="nb">type</span>', 'type')\
-         .gsub('<span class="nb">require</span>', 'require')
+      # Don't highlight 'require'
+      str.gsub('<span class="nb">require</span>', 'require')
     end
 
     class Snippets
