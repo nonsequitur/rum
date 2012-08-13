@@ -58,7 +58,7 @@ layout.core_modifier 'escape' # Sets a core modifier.
 
 
 
-#### 2. Hotkeys
+#### 3. Hotkeys
 ## The basics
 'modifiers hotkey'.do { action }
 'ctrl shift w'.do { active_window.close }
@@ -129,7 +129,7 @@ action = 'ctrl a'.unregister
 
 
 
-#### 3. Keyboard
+#### 4. Keyboard
 
 ### Caveat: Not yet available on the Mac.
 
@@ -187,7 +187,7 @@ type '(alt-extended)'
 
 
 
-#### 3. Gui
+#### 5. Gui
 ## Messages
 # Prints a non-disruptive notification when Growl is enabled,
 # falls back to alert (see below)  otherwise
@@ -242,13 +242,13 @@ Gui.read
 ...
 
 
-#### 4. Get selected text
+#### 6. Get selected text
 ### Caveat: Not yet available on the Mac.
 # Grabs the currently selected text.
 get_selection # returns the current selection or nil
 
 
-#### 5. Clipboard
+#### 7. Clipboard
 ### Caveat: Not yet available on the Mac.
 # Retrieves the clipboard contents as text.
 Clipboard.get # Always returns a string
@@ -275,7 +275,7 @@ Clipboard.preserve { Clipboard.set 'bar' }
 Clipboard.get #=> "foo"
 
 
-#### 6. More methods
+#### 8. More methods
 ## Waiting
 # Wait until condition is true. Times out after 5 seconds, updates every 0.01 seconds.
 wait { condition } #=> False when timed-out. Otherwise: true
@@ -305,7 +305,7 @@ System.spawn_in_terminal
 System.start
 System.applescript
 
-#### 6. Rum's threading model
+#### 9. Rum's threading model
 # Rum employs one worker thread that executes all hotkey actions
 # sequentially.
 # Errors during execution are automatically reported via Gui.message.
@@ -323,7 +323,7 @@ System.applescript
 # When you call Gui.read, Gui.alert or Gui.print
 # then Rum.switch_worker_thread is automatically run.
 
-#### 5. Help, introspection
+#### 10. Help, introspection
 # Prompts you to enter a hotkey and then jumps to its
 # definition via Gui.open_file.
 Rum.visit_hotkey
@@ -345,7 +345,7 @@ WindowInfo.start
 Rum.reference
 
 
-#### 5. Restarting, server
+#### 11. Restarting, server
 # Restart the current Rum configuration.
 Rum.restart 
 
@@ -354,7 +354,7 @@ Rum.restart
 Rum::Server.start
 
 
-#### 6. Windows
+#### 12. Windows
 
 ### Caveat: Not yet available on the Mac.
 
@@ -392,7 +392,7 @@ w.close
 w.kill_task # kills the task associated with the window
 
 
-#### 7. Apps
+#### 13. Apps
 # Integrates prominent applications into Rum.
 require 'rum/apps'
 
