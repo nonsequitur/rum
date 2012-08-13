@@ -79,7 +79,7 @@ static VALUE f_send_unicode_char_internal(VALUE self, VALUE character)
 
   return SendInput(2, inp, sizeof(INPUT)) ? Qtrue : Qfalse;
 }
-  
+
 /* Returns 'true' if successful, 'false' if not. */
 static VALUE ForceWindowToFront(VALUE self)
 {
@@ -94,7 +94,7 @@ static DWORD process_id(VALUE window)
 {
   VALUE handle = rb_iv_get(window, "@handle");
   HWND window_handle = (HWND)NUM2ULONG(handle);
-  
+
   DWORD process_id = 0;
   GetWindowThreadProcessId(window_handle, &process_id);
   return process_id;
@@ -115,7 +115,7 @@ static VALUE exe_path_internal(VALUE self)
       return rb_str_new(buffer, sizeof(WCHAR) * num_chars);
     } else {
       return Qnil;
-    }    
+    }
 }
 
 static LPRECT get_window_rect(VALUE window, LPRECT rect)
@@ -231,13 +231,13 @@ static VALUE input_box_internal(VALUE self, VALUE text, VALUE title,
 void Init_system() {
   input_box_initialize(GetModuleHandle(NULL));
   autohotkey_stuff_initialize(GetCurrentThreadId());
-  
+
   mSystem    = rb_define_module_under(rb_define_module("Rum"), "System");
   mDesktop   = rb_define_module_under(mSystem, "Desktop");
   mScreen    = rb_define_module_under(mSystem, "Screen");
   mClipboard = rb_define_module_under(mSystem, "Clipboard");
   cWindow    = rb_define_class_under(mSystem, "Window", rb_cObject);
-  
+
   rb_define_method(mSystem, "enum_windows", enum_windows, 0);
   rb_define_method(mSystem, "keybd_event", f_keybd_event, -1);
   rb_define_method(mSystem, "send_unicode_char_internal", f_send_unicode_char_internal, 1);
@@ -251,15 +251,15 @@ void Init_system() {
   rb_define_method(cWindow, "right", right, 0);
   rb_define_method(cWindow, "top", top, 0);
   rb_define_method(cWindow, "bottom", bottom, 0);
-  
+
   rb_define_module_function(mDesktop, "top", desktop_top, 0);
   rb_define_module_function(mDesktop, "left", desktop_left, 0);
   rb_define_module_function(mDesktop, "bottom", desktop_bottom, 0);
   rb_define_module_function(mDesktop, "right", desktop_right, 0);
-  
+
   rb_define_module_function(mScreen, "width", screen_width, 0);
   rb_define_module_function(mScreen, "height", screen_height, 0);
-  
+
   rb_define_method(mClipboard, "install_watcher", install_watcher, 0);
   rb_define_method(mClipboard, "evaluate_watcher", evaluate_watcher, 2);
 }

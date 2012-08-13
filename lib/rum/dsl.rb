@@ -7,7 +7,7 @@ module Rum
     def register
       Rum.hotkey_set.register(self)
     end
-    
+
     def unregister
       Rum.hotkey_set.unregister(self)
     end

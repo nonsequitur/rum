@@ -10,7 +10,7 @@ module Client
   end
 
   class NilResponse < StandardError; end
-  
+
   def eval(code)
     if connect
       result = @remote.eval(code) or raise NilResponse
@@ -29,7 +29,7 @@ module RemoteIRB
       eval(Client.eval(completor_call))
     rescue Exception # Explicitly rescue Exception to catch eval errors.
     end
-    
+
     def Completion.setup
       Readline.completion_proc = lambda do |input|
         candidates("IRB::InputCompletor::CompletionProc.call(#{input.dump})")
@@ -42,7 +42,7 @@ module RemoteIRB
 
     # Borrowed from Hijack
     const_set 'Workspace', Class.new(IRB::WorkSpace)
-    Workspace.class_eval do 
+    Workspace.class_eval do
       def evaluate(context, statements, file = __FILE__, line = __LINE__)
         if completor_call = statements[/^puts (IRB::InputCompletor.*)/, 1]
           puts Completion.candidates(completor_call)
@@ -108,7 +108,7 @@ Evaluates code from standard input if arguments are omitted.
 
 You can set the environment variable RUM_PORT to change the
 port that is used by Rum-Client and Rum-Server.'
-  
+
 when '-i', '--interactive'
   switch_to_mri_ruby if RUBY_DESCRIPTION =~ /MacRuby/
   require_relative '../lib/rum/remote'

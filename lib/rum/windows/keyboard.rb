@@ -3,17 +3,17 @@ require 'strscan'
 module Rum
   module Keyboard
     extend self
-    
+
     def type(key_sequence, *args)
       release_core_modifiers unless args.include? :blind
       type_sequence(key_sequence, args.include?(:slow))
     end
-    
+
     def type!(key_sequence, *args)
       release_core_modifiers unless args.include? :blind
       type_sequence_literally(key_sequence, args.include?(:slow))
     end
-    
+
     def type_unicode(key_sequence, *args)
       release_core_modifiers unless args.include? :blind
       type_sequence_unicode(key_sequence, args.include?(:slow))
@@ -59,7 +59,7 @@ module Rum
       end
       pressed_keys.reverse_each { |key| up key }
     end
-    
+
     def type_sequence_unicode(key_sequence, slow)
       s = StringScanner.new(key_sequence)
       pressed_keys = []
@@ -81,7 +81,7 @@ module Rum
       end
       pressed_keys.reverse_each { |key| up key }
     end
-    
+
     def down(key)
       send_key key, true
     end

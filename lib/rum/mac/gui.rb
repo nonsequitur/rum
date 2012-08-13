@@ -17,7 +17,7 @@ module Rum
       url = NSURL.URLWithString(url)
       NSWorkspace.sharedWorkspace.openURL(url)
     end
-    
+
     binary = File.join(File.dirname(__FILE__),
                        'gui/CocoaDialog.app/Contents/MacOS/CocoaDialog')
     CocoaDialog.setup binary

@@ -13,12 +13,12 @@ module Rum
       end
       paths
     end
-    
+
     def self.select dir
       path = Gui.choose(nil, contents(dir))
       (File.join(dir, path)) if path
     end
-    
+
     def self.run path
       if File.extname(path) == '.rb'
         eval(IO.read(path))
@@ -40,15 +40,15 @@ module Rum
       path.gsub('\\', '/')
     end
   end
-  
+
   module AppDir
     class << self
       attr_accessor :base_dir
-      
+
       def get(exe)
         File.join(@base_dir, exe, '')
       end
-      
+
       def get_or_create(exe)
         dir = get(exe)
         if File.exists? dir
@@ -98,7 +98,7 @@ module Rum
         @location.visit if @location
       end
     end
-    
+
     class << self
       attr_accessor :default_tag
       attr_accessor :commands
@@ -111,7 +111,7 @@ module Rum
         tags << tag if tag
         tags << default_tag
         tags.uniq!
-        
+
         if args and (hotkey = args[:hotkey])
           apps = tags.select { |tag| tag.is_a? App }
           apps.each { |app| hotkey.do(app, &block) }

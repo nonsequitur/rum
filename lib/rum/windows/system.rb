@@ -3,7 +3,7 @@ require_relative 'system_foreign_functions'
 module Rum
   module System
     extend self
-    
+
     def send_key_event key, down
       extended, id = key.id.divmod 2**9
       extended = (extended == 1)
@@ -32,7 +32,7 @@ module Rum
     def active_window
       Window.new get_foreground_window
     end
-    
+
     def terminal_window
       Window.new get_console_window
     end
@@ -55,7 +55,7 @@ module Rum
     # returns a copy
     def c_string obj
       str = obj.to_s + "\0"
-      str.encode(Encoding::UTF_16LE) 
+      str.encode(Encoding::UTF_16LE)
     end
 
     def message_box message, title=''
@@ -91,9 +91,9 @@ module Rum
 
    class Window
       include System
-      
+
       attr_reader :handle
-      
+
       def initialize(handle)
         @handle = handle
       end
@@ -102,7 +102,7 @@ module Rum
         return false unless other.respond_to? :handle
         @handle == other.handle
       end
-      
+
       def active?
         self.handle == get_foreground_window
       end
@@ -126,7 +126,7 @@ module Rum
       def maximize
         post_message @handle, WM_SYSCOMMAND, SC_MAXIMIZE, 0
       end
-      
+
       def minimize
         post_message @handle, WM_SYSCOMMAND, SC_MINIMIZE, 0
       end
@@ -158,7 +158,7 @@ module Rum
         restore if zoomed?
         move_window(@handle, x, y, width, height, 1)
       end
-      
+
       def title(max_length = 1024)
         buffer = "\0" * (max_length * 2)
         length = get_window_text_w(@handle, buffer, buffer.length)
@@ -166,13 +166,13 @@ module Rum
         result.force_encoding(Encoding::UTF_16LE)
         result.encode(Encoding::UTF_8, invalid: :replace)
       end
-      
+
       def class_name(max_length = 2048)
         buffer = "\0" * max_length
         length = get_class_name(@handle, buffer, buffer.length)
         length == 0 ? '' : buffer[0..length - 1]
       end
-      
+
       def text(max_length = 2048)
         buffer = '\0' * max_length
         length = send_with_buffer @handle, WM_GETTEXT, buffer.length, buffer
@@ -190,7 +190,7 @@ module Rum
                  else
                    0
                  end
-        
+
         raise "Control '#{id}' not found" if result == 0
         Window.new result
       end
@@ -198,7 +198,7 @@ module Rum
       def kill_task
         System.kill_task exe_name
       end
-      
+
       def report
         "Title: #{title}\nClass: #{class_name}"
       end
@@ -226,7 +226,7 @@ module Rum
     class WindowMatcher
       include System
       attr_reader :specs
-      
+
       def initialize title=nil, class_name=nil
         @specs = { title: title, class_name: class_name }
         raise 'No specifications given.' unless @specs.values.any?
@@ -240,7 +240,7 @@ module Rum
       def comparison_method obj
         if obj.is_a? Regexp then :=~ else :== end
       end
-      
+
       def matches? window
         @specs.all? do |spec, value|
           not value or value.send(comparison_method(value), window.send(spec))
@@ -268,14 +268,14 @@ module Rum
         end
       end
     end
-    
+
     module Clipboard
       extend self
-      
+
       def get
         Win32::Clipboard.get
       end
-    
+
       def set str
         Win32::Clipboard.set str
       end
@@ -310,7 +310,7 @@ module Rum
       def paste
         Keyboard.type '(ctrl v)'
       end
-      
+
       def get_selection
         Clipboard.get if Clipboard.copy
       end
@@ -326,4 +326,3 @@ module Rum
     end
   end
 end
-

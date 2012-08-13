@@ -4,7 +4,7 @@ require 'rum'
 
 # If you use Emacs
 require 'rum/apps'
-'shift f2'.do { Emacs.eval '(rum-client)'; Emacs.activate } 
+'shift f2'.do { Emacs.eval '(rum-client)'; Emacs.activate }
 
 Rum::Server.start
 Rum.start

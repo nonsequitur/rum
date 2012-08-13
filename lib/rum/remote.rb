@@ -31,15 +31,15 @@ module Rum
           msg.force_encoding Encoding::BINARY
           write([msg.length].pack('N') + msg)
         end
-        
+
         def receive
           if message_size = read(4) # sizeof (N)
-            message_size = message_size.unpack('N')[0]	
+            message_size = message_size.unpack('N')[0]
             read(message_size).force_encoding(Encoding::UTF_8)
           end
         end
       end
-      
+
       def Connection.new(stream)
         stream.extend Messaging
       end

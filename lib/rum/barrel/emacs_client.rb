@@ -37,7 +37,7 @@ class EmacsClient
       @server_file = File.join(ENV['HOME'], '.emacs.d', 'server', 'server')
       read_config
     end
-    
+
     def read_config
       @server_active = File.exists? @server_file
       return unless @server_active

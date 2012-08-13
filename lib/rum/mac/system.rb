@@ -5,9 +5,9 @@ module Rum
     def applescript src
       pointer = Pointer.new_with_type("@")
       as = NSAppleScript.alloc.initWithSource(src)
-      as.executeAndReturnError(pointer)  
+      as.executeAndReturnError(pointer)
     end
-    
+
     def start *args
       system 'open', *args
     end

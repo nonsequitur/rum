@@ -14,7 +14,7 @@ Encoding.default_external = Encoding::UTF_8
 
 module Rum
   autoload :Server, 'rum/server'
-  
+
   class << self
     attr_writer :layout
     attr_reader :hotkey_set, :hotkey_processor, \
@@ -23,7 +23,7 @@ module Rum
     def layout
       @layout ||= Layouts.default_layout
     end
-    
+
     def setup
       return if setup_completed?
       @hotkey_set = HotkeySet.new(layout)
@@ -73,7 +73,7 @@ module Rum
           end
         end
       end
-      
+
       Gui.message error_message, :sticky, &callback
     end
 
@@ -103,7 +103,7 @@ module Rum
   end
 
   InitialWorkingDir = Dir.pwd
-  
+
   def restart
     Dir.chdir InitialWorkingDir
     if Thread.current == Rum::Server.thread
@@ -116,7 +116,7 @@ module Rum
       restart_platform_specific
     end
   end
-  
+
   def show
     System.terminal_window.show
   end

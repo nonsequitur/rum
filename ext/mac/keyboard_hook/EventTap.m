@@ -29,7 +29,7 @@ CFMachPortRef keyboard_event_tap;
                                               self);
 	CFRunLoopSourceRef tapSource = CFMachPortCreateRunLoopSource(NULL, keyboard_event_tap, 0);
 	CFRunLoopAddSource((CFRunLoopRef) [[NSRunLoop currentRunLoop] getCFRunLoop], tapSource, kCFRunLoopCommonModes);
-	
+
 	return self;
 }
 
@@ -72,6 +72,6 @@ CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type,
   default:
     return event;
   }
-  
+
   return [((id) eventTapObject) handleEvent:[[Event alloc] initWithEventRef:event tapProxy:proxy type:type down:is_down]].eventRef;
 }

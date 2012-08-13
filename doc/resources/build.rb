@@ -8,7 +8,7 @@ class Doc
             'pygmentize'
           end
     Cmd = "#{Bin} -O encoding=utf-8 -l ruby -f html"
-    
+
     def self.file file
       fix_pygments_output(`#{Cmd} #{file}`)
     end
@@ -63,7 +63,7 @@ class Doc
       parse
       to_html
     end
-    
+
     def parse
       @result = []
       @last_type = nil
@@ -81,7 +81,7 @@ class Doc
       else [:code, line]
       end
     end
-    
+
     EmptyAllowed = { code: true, text: true }
 
     def compose_doc type, line
@@ -97,7 +97,7 @@ class Doc
 
     class TableOfContents
       Heading = Struct.new(:text, :anchor_name)
-      
+
       def initialize
         @headings = []
       end
@@ -106,7 +106,7 @@ class Doc
         chapter_number = @headings.count + 1
         @headings << Heading.new(heading, "chapter_#{chapter_number}")
       end
-    
+
       def heading_html
         heading = @headings.last
         "<a name=\"#{heading.anchor_name}\"><h1>#{heading.text}</h1></a>"
@@ -133,7 +133,7 @@ class Doc
     def to_html
       snippets = Pygmentize::Snippets.new
       table_of_contents = TableOfContents.new
-      
+
       sections = @result.map do |type, *lines|
         case type
         when :chapter

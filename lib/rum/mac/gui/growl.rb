@@ -8,7 +8,7 @@ module Rum
           @callbacks = {}
           GrowlApplicationBridge.setGrowlDelegate(self)
         end
-        
+
         def registrationDictionaryForGrowl
           notifications = [@notification_name]
           { TicketVersion: 1,  AllNotifications: notifications,
@@ -42,9 +42,9 @@ module Rum
         framework File.join(File.dirname(__FILE__), 'Growl.framework')
         @@notifier = Notifier.new('Rum', 'Notification')
       end
-      
+
       private
-      
+
       def message_backend(text, title, sticky, callback)
         title ||= 'Rum' # Mac Growl needs a title
         @@notifier.notify(title, text, sticky, callback)

@@ -1,7 +1,7 @@
 module Rum
   module Gui
     extend self
-    
+
     def self.use gui_module, *methods
       if methods.empty?
         include gui_module
@@ -56,7 +56,7 @@ module Rum
       private
 
       def alert_backend prompt, title
-        result = dialog('ok-msgbox', '--text', prompt.to_s, '--title', title.to_s) 
+        result = dialog('ok-msgbox', '--text', prompt.to_s, '--title', title.to_s)
         result.first == '1'
       end
 
@@ -77,7 +77,7 @@ module Rum
         result = dialog('standard-dropdown', '--items', *choices.map(&:to_s), *prompt)
         choices[result[1].to_i] if result.first == '1'
       end
-      
+
       def dialog *args
         IO.popen([@@binary, *args]) { |p| p.read }.split
       end

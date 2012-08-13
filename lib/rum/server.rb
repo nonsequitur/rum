@@ -3,7 +3,7 @@ require 'rum/remote'
 module Rum
   module Server
     module_function
-    
+
     # This makes it easier for code to check if it runs inside the server thread.
     def thread
       @thread
@@ -70,7 +70,7 @@ module Rum
               workspace = Struct.new(:binding).new(binding)
               context = Struct.new(:workspace).new(workspace)
               @CONF = { MAIN_CONTEXT: context }
-              
+
               def IRB.conf
                 @CONF
               end'

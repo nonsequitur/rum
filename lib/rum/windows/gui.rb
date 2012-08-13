@@ -7,7 +7,7 @@ module Rum
         Gui.message "Can't visit a file in Windows Explorer."
       end
     end
-    
+
     def open_file file, line=nil
       System.start file
     end
@@ -23,7 +23,7 @@ module Rum
       def alert_backend text, title
         System.message_box text, title
       end
-      
+
       def message_backend text, title, sticky, callback
         alert text, title
       end
@@ -39,7 +39,7 @@ module Rum
       Message = 'message'
 
       private
-      
+
       def message_backend(text, title, sticky, callback)
         unless title
           title = text
@@ -50,13 +50,13 @@ module Rum
         if callback
           on_click = lambda { |event| callback.call if event[:callback_result] == "CLICK" }
         end
-        
+
         Growl.client.notify(name: Message, title: title,
                             text: text, sticky: sticky, &on_click)
       end
-      
+
       module_function
-      
+
       def auto_setup
         require 'ruby_gntp'
         @growl = GNTP.new("Rum")
@@ -73,7 +73,7 @@ module Rum
 
     module EmacsInteraction
       private
-      
+
       def interaction(*args)
         emacs = Emacs.window
         return '' unless emacs

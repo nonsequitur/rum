@@ -18,4 +18,3 @@ class << Photoshop
     type '(shift (subtract))'
   end
 end
-

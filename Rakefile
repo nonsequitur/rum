@@ -28,7 +28,7 @@ namespace :ext do
                    'autohotkey_stuff', 'clipboard_watcher']]
 
     extensions.each do |dir, ext, *deps|
-      
+
       extconf = "#{dir}/extconf.rb"
 
       deps.map! do |dependency|
@@ -40,7 +40,7 @@ namespace :ext do
         end
         source
       end
-      
+
       file "#{InstallDir}/#{ext}.so" => ["#{dir}/#{ext}.c", extconf, *deps] do
         Dir.chdir(dir) do
           ruby 'extconf.rb'
@@ -64,7 +64,7 @@ namespace :ext do
       rm_r keyboard_hook if File.exists? keyboard_hook
       cp_r xcode_output, keyboard_hook
     end
-    
+
     file xcode_output => FileList['ext/mac/keyboard_hook/*.m'] do
       Dir.chdir('ext/mac/keyboard_hook') { system 'xcodebuild' }
     end
@@ -88,9 +88,9 @@ namespace :gem do
     # mingw32 and mswin32 binaries can be used interchangeably
     platforms = ['x86-mingw32', 'x86-mswin32-60']
     files = FileList['**/*'].exclude(*CLEAN.to_a, *MAC_BINARIES)
-    
+
     platforms.each do |platform|
-      common_spec do |spec| 
+      common_spec do |spec|
         spec.files = files
         spec.add_dependency('ruby_gntp', '>= 0.3.4')
         spec.add_dependency('win32-api', '>= 1.4.8')
@@ -110,7 +110,7 @@ namespace :gem do
   end
 
   task :publish do
-    
+
   end
 end
 task :gem => ['gem:windows', 'gem:mac']

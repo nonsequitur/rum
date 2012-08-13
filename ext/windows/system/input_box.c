@@ -28,7 +28,7 @@ static void input_box_populate_window(InputBox *box, HWND blank_window)
 {
   NONCLIENTMETRICS metrics;
   HFONT	font;
-  
+
   box->main_window = blank_window;
 
   box->text = CreateWindow(L"Static", L"",
@@ -61,7 +61,7 @@ static void input_box_populate_window(InputBox *box, HWND blank_window)
                              box->instance, NULL);
 
   font = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-  
+
   SendMessage(box->text,WM_SETFONT,(WPARAM)font,FALSE);
   SendMessage(box->edit_control,WM_SETFONT,(WPARAM)font,FALSE);
   SendMessage(box->ok,WM_SETFONT,(WPARAM)font,FALSE);
@@ -89,7 +89,7 @@ static void input_box_submit(InputBox *box)
 LRESULT CALLBACK window_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
   InputBox *box = (InputBox*)GetWindowLong(hwnd, GWL_USERDATA);
-  
+
   switch(msg)
     {
     case WM_CREATE:
@@ -170,7 +170,7 @@ static void input_box_create(InputBox *box, HINSTANCE instance)
   RECT rect;
 
   GetWindowRect(GetDesktopWindow(), &rect);
-  
+
   box->instance    = instance;
   box->main_window = CreateWindowEx(WS_EX_TOPMOST,
                                     IB_CLASS_NAME, L"",
@@ -201,9 +201,9 @@ int input_box(LPCTSTR text, LPCTSTR title,
 {
   MSG msg;
   InputBox box;
-  
+
   input_box_create(&box, global_instance);
-  
+
   input_box_show(&box, title, text, result_text, max_chars);
 
   while(GetMessage(&msg, NULL, 0, 0) > 0)
@@ -221,11 +221,11 @@ int input_box(LPCTSTR text, LPCTSTR title,
       } else {
         TranslateMessage(&msg);
       }
-      DispatchMessage(&msg);	
+      DispatchMessage(&msg);
     }
 
   input_box_destroy(&box);
-  
+
   return(box.result);
 }
 

@@ -12,7 +12,7 @@ reference.
     'caps f1'.do { message 'foo' }
     'caps shift f1'.do { message 'bar' }
     Rum.start
-  
+
 ## License
 Rum is available under the MIT license
 (http://www.opensource.org/licenses/mit-license.php)
@@ -24,7 +24,7 @@ Copyright 2010-2011, The Rum Project
     CocoaDialog is Copyright © 2004, Mark A. Stratman <mark@sporkstorms.org>
     It is licensed under the GNU General Public License.
     http://cocoadialog.sourceforge.net/
-   
+
 #### Growl
     Copyright (c) The Growl Project, 2004
     All rights reserved.

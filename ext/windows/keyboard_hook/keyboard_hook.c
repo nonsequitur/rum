@@ -22,7 +22,7 @@ static BOOL pass_key_event_to_ruby(struct KeyEvent *key_event) {
                                INT2NUM(key_event->scancode),
                                (key_event->down ? Qtrue : Qfalse) };
   VALUE event = rb_class_new_instance(3, event_attributes, cEvent);
-  
+
   return (Qtrue == rb_funcall(ruby_callback_proc, id_call, 1, event));
 }
 
@@ -36,7 +36,7 @@ callback_function(int Code, WPARAM wParam, LPARAM lParam)
   #ifdef DEBUG
   puts("Enter Callback");
   #endif
-  
+
   key_event.vkcode   = kbd->vkCode;
   key_event.scancode = kbd->scanCode;
   key_event.down     = (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN);
@@ -96,7 +96,7 @@ static VALUE start(int argc, VALUE* argv, VALUE self)
     HMODULE module = GetModuleHandle(NULL);
     thread = GetCurrentThreadId();
     rb_scan_args(argc, argv, "0&", &ruby_callback_proc);
-    
+
     keyboard_hook = SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)callback_function,
                                      module, 0);
     rb_thread_blocking_region(pump_messages, 0, 0, 0);

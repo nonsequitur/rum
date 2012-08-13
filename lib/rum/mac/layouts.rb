@@ -3,7 +3,7 @@
 module Rum
   module Layouts
     module_function
-    
+
     def default_layout
       us
     end
@@ -11,7 +11,7 @@ module Rum
     # /System/Library/Frameworks/Carbon.framework/.../Events.h
     def core
       core = Layout.new
-      
+
       [['return', "\n", 36],
        ['tab', 48],
        ['space', ' ', 49],
@@ -60,7 +60,7 @@ module Rum
        ['rightarrow', 124],
        ['downarrow', 125],
        ['uparrow', 126]].each { |key| core.add *key }
-      
+
       core
     end
 
@@ -123,7 +123,7 @@ module Rum
          5 = 9 7 - 8 0 ] o u [ i p _ l j _ k ; _ , / n m .}.each_with_index do |key, id|
         us.add key, id unless key == '_'
       end
-      
+
       us.add "'", 39
       us.add '\\', 42
       us.add '`', 50

@@ -33,7 +33,7 @@ layout['foo']  #=> #<Key:foo>
 
 ## Finding out the name of a key
 # All keyboard activity is reported at the terminal.
-# Switch to the Rum terminal window and press a key. 
+# Switch to the Rum terminal window and press a key.
 
 
 ### Advanced
@@ -347,7 +347,7 @@ Rum.reference
 
 #### 11. Restarting, server
 # Restart the current Rum configuration.
-Rum.restart 
+Rum.restart
 
 # Start the server. This allows for connections to the
 # Rum process via rum-client.
@@ -415,4 +415,3 @@ Emacs.eval '(idle-highlight-mode t)' # Turns on a minor mode in the current buff
 # Set this on Windows to allow Emacs.activate
 # to start Emacs when it's not running.
 Emacs.path = 'path/to/runemacs'
- 

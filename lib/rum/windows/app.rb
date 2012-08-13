@@ -3,11 +3,11 @@ module Rum
     include System
 
     @@apps = {}
-    
+
     def self.add(app)
       @@apps[app.binary] = app
     end
-    
+
     def self.remove(app)
       @@apps.delete(app.binary)
     end

@@ -6,7 +6,7 @@ require 'rum/mac/app'
 
 module Rum
   Platform = :mac
-  
+
   def self.restart_platform_specific
     Rum::Server.close_connections
     exec(RUBY_ENGINE, $PROGRAM_NAME)

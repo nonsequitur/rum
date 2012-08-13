@@ -20,8 +20,8 @@ static BOOL observe_messages() {
 static LRESULT APIENTRY
 clipboard_hook(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam) {
   HWND next_viewer = (HWND)GetWindowLongPtr(hwnd, GWL_USERDATA);
-  switch (umsg) 
-    { 
+  switch (umsg)
+    {
     case WM_DRAWCLIPBOARD:
       /* A stop signal for observe_messages() */
       PostMessage(hwnd, WM_APP, 0, 0);

@@ -7,7 +7,7 @@ module Rum
     def default_layout
       us
     end
-    
+
     def core
       # http://msdn.microsoft.com/en-us/library/dd375731%28VS.85%29.aspx
       core = Layout.new
@@ -133,12 +133,12 @@ module Rum
 
     def basic
       basic = core
-      
+
       basic.remap 'lcontrol', 'rcontrol', 'control'
       basic.remap 'rmenu', 'lmenu'
       basic.remap 'lshift', 'rshift', 'shift'
       basic.remap 'rwin', 'lwin'
-      
+
       basic.alias 'control', 'ctrl'
       basic.alias 'control', 'c'
       basic.rename 'lmenu', 'alt'
@@ -152,8 +152,8 @@ module Rum
       basic.rename 'prior', 'pageup'
       basic.rename 'next', 'pagedown'
       basic.rename 'snapshot', 'print'
-      
-      
+
+
       %w{shift control alt win}.each { |key| basic.core_modifier key }
 
       basic.action_modifier 'alt'
@@ -205,7 +205,7 @@ END
       german.rename 'oem_6', '´'
       german.rename 'oem_7', 'ä'
       german.rename 'oem_102', '<'
-      
+
       shift_translations = <<END.scan(/(\S) (\S)/)
 ° ^   $ 4   ( 8   ` ´    ; ,
 ! 1   % 5   ) 9   * +    : .

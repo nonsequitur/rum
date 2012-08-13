@@ -41,7 +41,7 @@ class Event
   def keycode
     get_integer_value_field(KCGKeyboardEventKeycode)
   end
-  
+
   def id
     get_integer_value_field(KCGKeyboardEventKeycode)
   end
@@ -63,11 +63,10 @@ class Event
   end
 
   def get_flags
-    CGEventGetFlags(eventRef)  
+    CGEventGetFlags(eventRef)
   end
 
   def set_flags(flags)
     CGEventSetFlags(eventRef, flags)
   end
 end
-

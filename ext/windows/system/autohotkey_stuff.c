@@ -4,7 +4,7 @@ static DWORD g_MainThreadID;
 
 void autohotkey_stuff_initialize(DWORD main_thread_id)
 {
-  g_MainThreadID = main_thread_id; 
+  g_MainThreadID = main_thread_id;
 }
 
 static void key_down_up(BYTE vkcode) {
@@ -85,9 +85,9 @@ HWND SetForegroundWindowEx(HWND aTargetWindow)
   else
     show_mode = SW_SHOW;
   ShowWindow(aTargetWindow, show_mode);
-  
-  
-  
+
+
+
   // if (g_os.IsWin95() || (!g_os.IsWin9x() && !g_os.IsWin2000orLater())))  // Win95 or NT
   // Try a simple approach first for these two OS's, since they don't have
   // any restrictions on focus stealing:
@@ -255,4 +255,3 @@ HWND SetForegroundWindowEx(HWND aTargetWindow)
   else
     return NULL                             ;
 }
-

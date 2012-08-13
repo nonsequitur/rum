@@ -4,7 +4,7 @@ module Rum
                           'doc', 'reference.rb')
     Gui.open_file reference
   end
-  
+
   def self.read_key &proc
     KeyReader.start(hotkey_processor, proc)
   end
@@ -37,7 +37,7 @@ module Rum
   module KeyReader
     extend self
     attr_accessor :pressed_modifiers
-    
+
     Hook = proc do
       @pass_key = false
       if @key.modifier?
@@ -45,7 +45,7 @@ module Rum
           KeyReader.pressed_modifiers << @key
         elsif seen_key = KeyReader.pressed_modifiers.delete(@key)
           if @key == @last_key
-            KeyReader.stop(@key, @pressed_modifiers) 
+            KeyReader.stop(@key, @pressed_modifiers)
           elsif @pressed_modifiers.values.compact.empty?
             KeyReader.stop
           end
@@ -56,7 +56,7 @@ module Rum
         KeyReader.stop(@key, @pressed_modifiers)
       end
     end
-    
+
     def start(hotkey_processor, proc)
       @hotkey_processor = hotkey_processor
       @proc = proc
@@ -86,7 +86,7 @@ module Rum
 
   module WindowInfo
     module_function
-    
+
     def start
       return if @thread
       register_stop_key

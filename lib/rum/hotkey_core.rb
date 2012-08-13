@@ -1,14 +1,14 @@
 module Rum
   class Key
     attr_accessor :name, :id, :aliases, :modifier
-    
+
     def initialize name, aliases, id
       @name = name
       @id = id
       @aliases = aliases
       @modifier = false
     end
-    
+
     def modifier?
       @modifier
     end
@@ -21,7 +21,7 @@ module Rum
   class Layout
     attr_accessor :ids, :names, :aliases, :modifiers, :core_modifiers, \
                   :action_modifiers, :translations
-    
+
     def initialize
       @ids = {}
       @names = {}
@@ -60,7 +60,7 @@ module Rum
       name = args.shift
       aliases = args
       key = Key.new(name, aliases, id)
-      
+
       @ids[id] = key
       @names[name] = key
       aliases.each { |key_alias| @aliases[key_alias] = key }
@@ -110,7 +110,7 @@ module Rum
 
   class Hotkey
     attr_accessor :key, :modifiers, :actions, :direction # todo: unveränderlich machen
-    
+
     def initialize key, modifiers=[], fuzzy=false, actions=[]
       @key = key
       @modifiers = modifiers
@@ -137,7 +137,7 @@ module Rum
     attr_accessor :action, :condition, :hotkey, :location
 
     @@hook = nil
-    
+
     def self.work_queue= queue
       @@work_queue = queue
     end
@@ -149,7 +149,7 @@ module Rum
     def self.hook
       @@hook
     end
-    
+
     def initialize(action, condition, repeated, location)
       @action = action
       @condition = condition
@@ -212,7 +212,7 @@ module Rum
       down_hotkey.direction = :down
       up_hotkey.direction   = :up
       to_key = @layout[to]
-      
+
       catch_modifier_up = proc do
         if down_hotkey.modifiers.include? @key
           send_key_event(to_key, false)
@@ -249,11 +249,11 @@ module Rum
         end
       end
       modifiers = modifiers.sort_by &:id
-      
+
       # Lookup key
       key = @layout[key_alias]
       raise "#{key_alias} is no valid key." unless key
-      
+
       Hotkey.new(key, modifiers, fuzzy)
     end
 
@@ -270,7 +270,7 @@ module Rum
       end
       action
     end
-    
+
     def unregister action
       if hotkey = action.hotkey
         hotkey.actions.delete(action)
@@ -305,7 +305,7 @@ module Rum
       end
       [dict, dict_key]
     end
-    
+
     def key_signature hotkey
       hotkey.modifiers.dup << hotkey.key
     end
@@ -318,7 +318,7 @@ module Rum
     def register_hotkey hotkey
       dict, dict_key = get_dict(hotkey)
       existing_hotkey = dict[dict_key] and return existing_hotkey
-      
+
       dict[dict_key] = hotkey
       if hotkey.key.modifier? # Modifier hotkeys aren't allowed to be fuzzy.
         @modifier_hotkeys[dict_key] = hotkey
@@ -398,7 +398,7 @@ module Rum
       @key_signature = nil
       @hooks = []
       @pass_key = true
-      
+
       @key = nil
       @last_key = nil
       @down = nil
@@ -410,12 +410,12 @@ module Rum
       @hooks.unshift hook
       hook
     end
-    
+
     # Return removed hook.
     def remove_hook(hook)
       @hooks.delete hook
     end
-    
+
     def key_signature key
       @modifiers.select { |modifier| @pressed_modifiers[modifier] } << key
     end
@@ -442,10 +442,10 @@ module Rum
         @key_signature = key_signature(@key)
       end
       @last_event_up = !@down
-      
+
       print "[#{@key_signature.map { |key| key.name.capitalize }.join(', ')}]"
       print ' (again)' if @key == @last_key; puts
-      
+
       if @down
         repeated = @was_executed[@key]
         eat = @was_executed[@key] = true if execute(true, repeated)
@@ -457,7 +457,7 @@ module Rum
       else #up
         @was_executed[@key] = true if execute(false, false)
         if modifier
-          @pressed_modifiers[@key] = nil 
+          @pressed_modifiers[@key] = nil
           if @layout.action_modifiers[@key] and \
             (!@pass_key or @was_executed[@key])
             inhibit_modifier_action
@@ -465,7 +465,7 @@ module Rum
         end
         eat = @was_executed.delete(@key)
       end
-      
+
       @pass_key = if modifier
                     @layout.core_modifiers[@key]
                   else
@@ -474,7 +474,7 @@ module Rum
       @hooks.dup.each { |hook| instance_eval &hook }
       @last_key = @key
       puts
-      @pass_key    
+      @pass_key
     end
   end
 end

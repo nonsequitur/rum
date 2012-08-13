@@ -41,14 +41,14 @@ module Rum
     def_api 'SendMessage',         'LLLP', 'L', :send_with_buffer
     def_api 'SendMessage',         'LLLL', 'L'
     def_api 'PostMessage',         'LLLL', 'L'
-    def_api 'GetDlgItem',          'LL', 'L' 
+    def_api 'GetDlgItem',          'LL', 'L'
     def_api 'GetWindowRect',       'LP', 'I'
-    def_api 'SetCursorPos',        'LL', 'I' 
+    def_api 'SetCursorPos',        'LL', 'I'
     def_api 'mouse_event',         'LLLLL', 'V'
     def_api 'IsWindow',            'L', 'L'
     def_api 'IsWindowVisible',     'L', 'L'
     def_api 'SetForegroundWindow', 'L', 'L'
-    
+
     def_api 'GetWindowLong',       'LI', 'L'
     def_api 'GetForegroundWindow', 'V', 'L'
     def_api 'GetClassName',        'LPI', 'I'
@@ -60,15 +60,15 @@ module Rum
     def_api 'IsZoomed',            'L', 'L'
     def_api 'SetWindowPos',        'LLIIIII', 'I'
     def_api 'MoveWindow',          'LIIIIB', 'L'
-    
+
     ShellExecute = Win32::API.new('ShellExecute', 'LPPPPI', 'L', 'shell32')
     def start command, parameters=0
       ShellExecute.call(0, 'open', command, parameters, 0, 1)
     end
-    
-    WM_COMMAND    = 0x0111 
+
+    WM_COMMAND    = 0x0111
     WM_SYSCOMMAND = 0x0112
-    
+
     SC_CLOSE    = 0xF060
     SC_RESTORE  = 0xF120;
     SC_MAXIMIZE = 0xF030;

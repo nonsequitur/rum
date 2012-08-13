@@ -7,7 +7,7 @@ require 'rum/windows/layouts'
 
 module Rum
   Platform = :windows
-  
+
   def self.restart_platform_specific
     Rum::Server.stop
     System.spawn_in_terminal('ruby', $PROGRAM_NAME)
@@ -21,3 +21,4 @@ module Rum
     end
   end
 end
+
