@@ -10,5 +10,5 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 1.9.1'
 
   spec.executables << 'rum-client'
-  spec.extra_rdoc_files = ['README']
+  spec.extra_rdoc_files = ['README.md']
 end
