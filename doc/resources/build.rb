@@ -3,7 +3,8 @@ require 'haml'
 class Doc
   module Pygmentize
     Bin = if RUBY_PLATFORM =~ /mswin|mingw/ and ENV['USER'] == 'nonsequitur'
-            'C:/Programme/Python26/Scripts/pygmentize.exe'
+            python_dir = File.expand_path('~/vendor/Python32')
+            "#{python_dir}/python.exe #{python_dir}/scripts/pygmentize"
           else
             'pygmentize'
           end
