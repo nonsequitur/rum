@@ -6,9 +6,9 @@ class << Emacs
   Emacs.client = EmacsClient.new
 
   def eval(elisp)
+    elisp = "(with-current-buffer (window-buffer) #{elisp})" if @eval_in_user_buffer
     # MacRuby hack
     # @client.eval fails
-    elisp = "(with-current-buffer (window-buffer) #{elisp})" if @eval_in_user_buffer
     Emacs.client.eval(elisp)
   end
 
