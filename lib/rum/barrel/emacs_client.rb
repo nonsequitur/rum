@@ -4,16 +4,43 @@ require 'socket'
 # emacs_source/lib-src/emacsclient.c
 
 class EmacsClient
+
+  SERVER_MSG_SIZE = 1024 # defined in server.el on Emacs 24
+
   def eval(elisp)
     socket = connect
+    $socket = socket
     socket.puts "-eval #{quote(elisp)}"
-    result = unquote(socket.read)
+
+    messages = []
+    # On Emacs 24, the first message always has type '-emacs-pid'
+    # On Emacs 23, only one message is returned after sending '-eval'.
+    # It has type '-print' or '-error' and can be arbitrarily long.
+    msg = socket.gets
+    loop do
+      break if handle_message(msg, messages) == :abort
+      msg = socket.recv(SERVER_MSG_SIZE)
+    end
     socket.close
-    format(result)
+    unquote(messages.join)
   end
 
-  def format(str)
-    str[/.*? (.*)/, 1]
+  def handle_message(msg, messages)
+    return :abort if not msg or msg.empty?
+
+    if (match = msg.match(/(.*?) (.*)/))
+      type, body = match.captures
+      case type
+      when '-print', '-print-nonl'
+        messages << body
+      when '-error'
+        messages << body
+        return :abort
+      end
+    else
+      messages << "Error: Unknown message: #{msg}"
+      return :abort
+    end
   end
 
   def quote str
