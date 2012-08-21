@@ -135,6 +135,15 @@ module Rum
         post_message @handle, WM_SYSCOMMAND, SC_RESTORE, 0
       end
 
+      # Don't underestimate the Force
+      def force_show
+        100.times do
+          show
+          sleep 0.02
+          return true if active_window == self
+        end
+      end
+
       def file_dialog?
         class_name == '#32770'
       end
