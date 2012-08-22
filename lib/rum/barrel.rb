@@ -112,12 +112,16 @@ module Rum
         tags << default_tag
         tags.uniq!
 
+        location = FileLocation.from_stack_frame(caller.first)
+
         if args and (hotkey = args[:hotkey])
           apps = tags.select { |tag| tag.is_a? App }
-          apps.each { |app| hotkey.do(app, &block) }
+          apps.each do |app|
+            action = hotkey.do(app, &block)
+            action.location = location
+          end
         end
 
-        location = FileLocation.from_stack_frame(caller.first)
         cmd = Command.new(name, block, location)
         tags.each do |tag|
           commands_for_tag = (@commands[tag] ||= {})
