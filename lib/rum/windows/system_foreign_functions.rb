@@ -63,6 +63,8 @@ module Rum
 
     ShellExecute = Win32::API.new('ShellExecute', 'LPPPPI', 'L', 'shell32')
     def start command, parameters=0
+      command.encode!(Encoding::WINDOWS_1252)
+      parameters.encode!(Encoding::WINDOWS_1252) if parameters != 0
       ShellExecute.call(0, 'open', command, parameters, 0, 1)
     end
 
