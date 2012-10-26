@@ -8,7 +8,7 @@ def Firefox.activate_and_focus_address_bar
   Keyboard.type '(ctrl l)' if activate
 end
 
-Photoshop = App.new('Adobe/Adobe Photoshop CS5.1 (64 Bit)/Photoshop', nil, 'Photoshop', :x64)
+Photoshop = App.new('Adobe/Adobe Photoshop CS6 (64 Bit)/Photoshop', nil, 'Photoshop', :x64)
 class << Photoshop
   def next_blend_mode
     type '(shift (add))'
