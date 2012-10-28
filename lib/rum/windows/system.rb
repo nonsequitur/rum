@@ -204,6 +204,12 @@ module Rum
         Window.new result
       end
 
+      def child_windows
+        Enumerator.new do |yielder|
+          enum_child_windows { |handle| yielder.yield Window.new(handle) }
+        end
+      end
+
       def kill_task
         System.kill_task exe_name
       end

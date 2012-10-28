@@ -37,9 +37,21 @@ static BOOL CALLBACK enum_windows_proc(HWND hwnd, LPARAM lParam)
   return TRUE;
 }
 
+static BOOL CALLBACK enum_child_windows_proc(HWND hwnd, LPARAM lParam)
+{
+    rb_yield(LONG2NUM((DWORD)hwnd));
+    return TRUE;
+}
+
 static VALUE enum_windows(VALUE self) {
   EnumWindows(enum_windows_proc, 0);
   return Qnil;
+}
+
+static VALUE enum_child_windows(VALUE self) {
+    HWND window_handle = (HWND)NUM2ULONG(rb_iv_get(self, "@handle"));
+    EnumChildWindows(window_handle, enum_child_windows_proc, 0);
+    return Qnil;
 }
 
 static void call_keybd_event(struct KeybdEventParams *event) {
@@ -246,6 +258,7 @@ void Init_system() {
   rb_define_method(mSystem, "input_box_internal", input_box_internal, 3);
 
   rb_define_method(cWindow, "show", ForceWindowToFront, 0);
+  rb_define_method(cWindow, "enum_child_windows", enum_child_windows, 0);
   rb_define_method(cWindow, "exe_path_internal", exe_path_internal, 0);
   rb_define_method(cWindow, "left", left, 0);
   rb_define_method(cWindow, "right", right, 0);
