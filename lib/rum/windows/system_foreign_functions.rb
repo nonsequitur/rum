@@ -125,5 +125,29 @@ module Win32
       data.force_encoding Encoding::BINARY
       set_data(data, UNICODETEXT)
     end
+
+    def self.html_format
+      @html_format ||= register_format('HTML Format')
+    end
+
+    def self.get_html
+      html = html_format
+      self.open
+      if IsClipboardFormatAvailable(html)
+        handle = GetClipboardData(html)
+        clip_data = 0.chr * GlobalSize(handle)
+        memcpy(clip_data, handle, clip_data.size)
+        clip_data.force_encoding(Encoding::UTF_8)
+        clip_data = clip_data[ /^[^\0]*/ ]
+      end
+    ensure
+      self.close
+    end
+
+    def self.set_html str
+      data = str + "\0"
+      data.force_encoding Encoding::BINARY
+      set_data(data, html_format)
+    end
   end
 end

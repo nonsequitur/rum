@@ -291,6 +291,10 @@ module Rum
         Win32::Clipboard.get
       end
 
+      def get_html
+        Win32::Clipboard.get_html
+      end
+
       def set str
         Win32::Clipboard.set str
       end
