@@ -306,12 +306,6 @@ module Rum
         set old_content
       end
 
-      # def copy
-      #   watcher = install_watcher
-      #   Keyboard.type '(ctrl c)'
-      #   evaluate_watcher(watcher, 400) # Timeout: 400 msec
-      # end
-
       def wait_for_change
         watcher = install_watcher
         begin
