@@ -76,7 +76,7 @@ module Rum
 
       def interaction(*args)
         emacs = Emacs.window
-        return '' unless emacs
+        return unless emacs
         unless (emacs_already_active = emacs.active?)
           old = System.active_window
           emacs.move(400, 400, 800, 300)
