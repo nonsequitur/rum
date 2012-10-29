@@ -107,19 +107,17 @@ end
 module Win32
   class Clipboard
     def self.get
-      begin
-        self.open
-        return '' unless IsClipboardFormatAvailable(UNICODETEXT)
-        handle = GetClipboardData(UNICODETEXT)
-        clip_data = 0.chr * GlobalSize(handle)
-        memcpy(clip_data, handle, clip_data.size)
-        clip_data.force_encoding(Encoding::UTF_16LE)
-        clip_data.encode!(Encoding::UTF_8, invalid: :replace, replace: '', \
-                          universal_newline: true)
-        clip_data[ /^[^\0]*/ ]
-      ensure
-        self.close
-      end
+      self.open
+      return '' unless IsClipboardFormatAvailable(UNICODETEXT)
+      handle = GetClipboardData(UNICODETEXT)
+      clip_data = 0.chr * GlobalSize(handle)
+      memcpy(clip_data, handle, clip_data.size)
+      clip_data.force_encoding(Encoding::UTF_16LE)
+      clip_data.encode!(Encoding::UTF_8, invalid: :replace, replace: '', \
+                        universal_newline: true)
+      clip_data[ /^[^\0]*/ ]
+    ensure
+      self.close
     end
 
     def self.set str
