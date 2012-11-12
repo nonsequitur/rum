@@ -20,9 +20,7 @@ module Rum
     end
 
     def release_core_modifiers
-      pressed = Rum.hotkey_processor.pressed_modifiers
-      to_release = Rum.layout.core_modifiers.keys.select { |mod| pressed[mod] }
-      to_release.each { |key| System.send_key_event key, false }
+      Rum.hotkey_processor.release_core_modifiers
     end
 
     private

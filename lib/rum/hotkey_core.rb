@@ -394,6 +394,7 @@ module Rum
       @modifiers = @hotkey_set.modifiers
       @layout = @hotkey_set.layout
       @pressed_modifiers = {}
+      @pressed_core_modifier_ids = {}
       @was_executed = {}
       @key_signature = nil
       @hooks = []
@@ -453,11 +454,13 @@ module Rum
           eat = true
         elsif modifier # if repeated, the modifier has already been added to pressed_modifiers
           @pressed_modifiers[@key] = true
+          @pressed_core_modifier_ids[event.id] = true if @layout.core_modifiers[@key]
         end
       else #up
         @was_executed[@key] = true if execute(false, false)
         if modifier
           @pressed_modifiers[@key] = nil
+          @pressed_core_modifier_ids[event.id] = nil if @layout.core_modifiers[@key]
           if @layout.action_modifiers[@key] and \
             (!@pass_key or @was_executed[@key])
             inhibit_modifier_action
@@ -475,6 +478,12 @@ module Rum
       @last_key = @key
       puts
       @pass_key
+    end
+
+    def release_core_modifiers
+      @pressed_core_modifier_ids.each do |id, pressed|
+        send_key_event_for_id id, false if pressed
+      end
     end
   end
 end
