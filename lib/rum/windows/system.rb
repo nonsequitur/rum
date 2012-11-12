@@ -5,7 +5,11 @@ module Rum
     extend self
 
     def send_key_event key, down
-      extended, id = key.id.divmod 2**9
+      send_key_event_for_id key.id, down
+    end
+
+    def send_key_event_for_id id, down
+      extended, id = id.divmod 2**9
       extended = (extended == 1)
       keybd_event id, down, 0, extended
     end
