@@ -391,6 +391,17 @@ w.class_name #=> "Chrome_WidgetWin_0"
 w.close
 w.kill_task # kills the task associated with the window
 
+## Child windows
+# Enumerate all child windows
+w = active_window
+w.child_windows { |child| puts child.class_name }
+w.child_windows # => #<Enumerator: ...>
+
+# Get child window by class name. Pattern can be a regex or a string (for exact matches).
+w.child_window(pattern)
+
+# Example: Activate Evernote's search field
+Evernote.window.child_window('ENAutoCompleteEditCtrl').show
 
 #### 13. Apps
 # Integrates prominent applications into Rum.
