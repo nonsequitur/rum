@@ -208,6 +208,14 @@ module Rum
         Window.new result
       end
 
+      def child_window class_name
+        if class_name.is_a? Regexp
+          child_windows.find { |child| child.class_name =~ class_name }
+        else
+          child_windows.find { |child| child.class_name == class_name }
+        end
+      end
+
       def child_windows
         Enumerator.new do |yielder|
           enum_child_windows { |handle| yielder.yield Window.new(handle) }
