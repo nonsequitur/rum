@@ -328,8 +328,7 @@ pre, .code {
    padding: 1em 1em;
    margin: 0;
    margin-top: -0.4em;
-   -moz-border-radius: 9px;
-   -webkit-border-radius: 9px;
+   border-radius: 9px;
 }
 
 #table_of_contents {
@@ -337,8 +336,7 @@ pre, .code {
    background-color: #f7f7f7;
    padding: 1.5em 0 0.5em 1.7em;
    width: 15em;
-   -moz-border-radius: 16px;
-   -webkit-border-radius: 16px;
+   border-radius: 16px;
 }
 
 #table_of_contents li {
