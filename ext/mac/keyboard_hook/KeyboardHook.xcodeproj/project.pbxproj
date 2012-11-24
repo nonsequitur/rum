@@ -225,7 +225,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../DDHidLib-1.1/build/Release\"",
 					"\"$(SRCROOT)/..\"",
 				);
 				FRAMEWORK_VERSION = A;
