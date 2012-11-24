@@ -6,9 +6,11 @@
 <link href='resources/highlight.css' media='screen' rel='stylesheet' type='text/css' />
 </head>
 <body>
+<a href='#'>
 <img id='logo' src='resources/logo.png' />
+</a>
 <a href='https://github.com/nonsequitur/rum'>
-<img alt='Fork me on GitHub' src='https://d3nwyuy0nl342s.cloudfront.net/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67' style='position: absolute; top: 0; right: 0; border: 0;' />
+<img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png' style='position: absolute; top: 0; right: 0; border: 0;' />
 </a>
 <div id='nav'>
 <ul>
@@ -33,7 +35,7 @@
 </ul>
 </div>
 <div id='wrapper'>
-<div id='intro'>Rum is a cross-platform Hotkey and Macro utility, built in Ruby.<br />Not yet running on Linux, it’s progressing steadily on the Mac (MacRuby) and is fully supported on Windows.</div>
+<div id='intro'>Rum is a cross-platform Hotkey and Macro utility, built in Ruby.<br />It runs on Windows and Mac OS.</div>
 <img src='resources/screenshot.png' />
 <div id='screenshot-sub'></div>
 <div id='intro-code'>
@@ -54,7 +56,7 @@ require <span class="s1">&#39;rum/apps&#39;</span>
 <span class="s1">&#39;caps b&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="no">Chrome</span><span class="o">.</span><span class="n">activate_and_focus_address_bar</span> <span class="p">}</span>
 <span class="s1">&#39;caps s&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="no">Emacs</span><span class="o">.</span><span class="n">eval</span> <span class="s1">&#39;(slime-repl)&#39;</span><span class="p">;</span> <span class="no">Emacs</span><span class="o">.</span><span class="n">activate</span> <span class="p">}</span>
 <span class="s1">&#39;caps c&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="no">Clipboard</span><span class="o">.</span><span class="n">append</span> <span class="p">}</span>
-<span class="s1">&#39;ctrl shift h&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> type <span class="s1">&#39;hi&#39;</span> <span class="p">}</span>
+<span class="s1">&#39;ctrl shift h&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="n">type</span> <span class="s1">&#39;hi&#39;</span> <span class="p">}</span>
 <span class="c1"># Caveat: Some hotkey actions are not yet available on the Mac.</span>
 
 <span class="no">Rum</span><span class="o">.</span><span class="n">start</span>
@@ -82,13 +84,13 @@ require <span class="s1">&#39;rum/apps&#39;</span>
 </div>
 <p id='current_version'>
 Current version:
-0.0.1
+0.0.3
 <span id='changelog'>(<a href="https://github.com/nonsequitur/rum/blob/master/CHANGELOG">Changelog</a>)</span>
 </p>
 <div id='platforms'>
 <h3>Supported platforms</h3>
 <ul>
-<li>Mac OS X – MacRuby >=0.10</li>
+<li>Mac OS X >= 10.7 – MacRuby >=0.10.<br /></li>
 <li>
 32-bit Windows XP/Vista/7 – Ruby >=1.9.1p378.<br />
 </li>
@@ -161,7 +163,7 @@ Run Rum with this basic, REPL-enabled setup to get started:
 
 <span class="c1"># If you use Emacs</span>
 require <span class="s1">&#39;rum/apps&#39;</span>
-<span class="s1">&#39;shift f2&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="no">Emacs</span><span class="o">.</span><span class="n">eval</span> <span class="s1">&#39;(rum-client)&#39;</span><span class="p">;</span> <span class="no">Emacs</span><span class="o">.</span><span class="n">activate</span> <span class="p">}</span> 
+<span class="s1">&#39;shift f2&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="no">Emacs</span><span class="o">.</span><span class="n">eval</span> <span class="s1">&#39;(rum-client)&#39;</span><span class="p">;</span> <span class="no">Emacs</span><span class="o">.</span><span class="n">activate</span> <span class="p">}</span>
 
 <span class="no">Rum</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">start</span>
 <span class="no">Rum</span><span class="o">.</span><span class="n">start</span>
@@ -199,13 +201,13 @@ require <span class="s1">&#39;rum&#39;</span>
 <span class="n">read</span> <span class="s1">&#39;hi, how are you?&#39;</span> <span class="c1"># Input box</span>
 
 <span class="c1"># 4. Keyboard, send keypresses</span>
-type <span class="s1">&#39;hello&#39;</span>
-type <span class="s1">&#39;(ctrl (shift a))&#39;</span> <span class="c1"># Key combinations</span>
+<span class="n">type</span> <span class="s1">&#39;hello&#39;</span>
+<span class="n">type</span> <span class="s1">&#39;(ctrl (shift a))&#39;</span> <span class="c1"># Key combinations</span>
 
 <span class="c1"># 5. Help and introspection</span>
 <span class="c1"># Prompts you to enter a hotkey and then jumps to its</span>
 <span class="c1"># definition in your text editor.</span>
-<span class="s1">&#39;shift f2&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="no">Rum</span><span class="o">.</span><span class="n">show_hotkey</span> <span class="p">}</span>
+<span class="s1">&#39;shift f2&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="no">Rum</span><span class="o">.</span><span class="n">visit_hotkey</span> <span class="p">}</span>
 
 <span class="c1"># Asks you to enter an arbitrary hotkey and inserts a hotkey</span>
 <span class="c1"># definition snippet.</span>
@@ -244,7 +246,7 @@ Call <span class="code">Rum.reference</span> or manually open
 </p>
 </div>
 </div>
-<div id='reference_wrapper'><div id="table_of_contents"><h1>Chapters</h1><ul><li><a href="#chapter_1">1. Unicode</a></li><li><a href="#chapter_2">2. Layouts</a></li><li><a href="#chapter_3">2. Hotkeys</a></li><li><a href="#chapter_4">3. Keyboard</a></li><li><a href="#chapter_5">3. Gui</a></li><li><a href="#chapter_6">4. Get selected text</a></li><li><a href="#chapter_7">5. Clipboard</a></li><li><a href="#chapter_8">6. More methods</a></li><li><a href="#chapter_9">6. Rum's threading model</a></li><li><a href="#chapter_10">5. Help, introspection</a></li><li><a href="#chapter_11">5. Restarting, server</a></li><li><a href="#chapter_12">6. Windows</a></li><li><a href="#chapter_13">7. Apps</a></li></ul></div>
+<div id='reference_wrapper'><div id="table_of_contents"><h1>Chapters</h1><ul><li><a href="#chapter_1">1. Unicode</a></li><li><a href="#chapter_2">2. Layouts</a></li><li><a href="#chapter_3">3. Hotkeys</a></li><li><a href="#chapter_4">4. Keyboard</a></li><li><a href="#chapter_5">5. Gui</a></li><li><a href="#chapter_6">6. Get selected text</a></li><li><a href="#chapter_7">7. Clipboard</a></li><li><a href="#chapter_8">8. More methods</a></li><li><a href="#chapter_9">9. Rum's threading model</a></li><li><a href="#chapter_10">10. Help, introspection</a></li><li><a href="#chapter_11">11. Restarting, server</a></li><li><a href="#chapter_12">12. Windows</a></li><li><a href="#chapter_13">13. Apps</a></li></ul></div>
 <div class="chapter">
 <a name="chapter_1"><h1>1. Unicode</h1></a>
 
@@ -292,12 +294,12 @@ Call <span class="code">Rum.reference</span> or manually open
 <pre class="highlight"><span class="n">layout</span><span class="o">.</span><span class="n">core_modifier</span> <span class="s1">&#39;escape&#39;</span> <span class="c1"># Sets a core modifier.</span></pre>
 </div>
 <div class="chapter">
-<a name="chapter_3"><h1>2. Hotkeys</h1></a>
+<a name="chapter_3"><h1>3. Hotkeys</h1></a>
 
 <h3>The basics</h3>
 <pre class="highlight"><span class="s1">&#39;modifiers hotkey&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="n">action</span> <span class="p">}</span>
 <span class="s1">&#39;ctrl shift w&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="n">active_window</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
-<span class="s1">&#39;f1&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> type <span class="s1">&#39;hello&#39;</span> <span class="p">}</span></pre>
+<span class="s1">&#39;f1&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="n">type</span> <span class="s1">&#39;hello&#39;</span> <span class="p">}</span></pre>
 <p>The last statement can be abbreviated:</p>
 <pre class="highlight"><span class="s1">&#39;f1&#39;</span><span class="o">.</span><span class="n">do</span> <span class="s1">&#39;hello&#39;</span></pre>
 <h3>Hotkey conditions</h3>
@@ -340,44 +342,47 @@ Call <span class="code">Rum.reference</span> or manually open
 <p>... can't be unregistered this way</p>
 </div>
 <div class="chapter">
-<a name="chapter_4"><h1>3. Keyboard</h1></a>
+<a name="chapter_4"><h1>4. Keyboard</h1></a>
 
 <h2>Caveat: Not yet available on the Mac.</h2>
 <p>Generates keystrokes.</p>
 <pre class="highlight"><span class="no">Keyboard</span><span class="o">.</span><span class="n">type</span> <span class="s1">&#39;hi&#39;</span></pre>
 <p>The 'Keyboard.' prefix can be omitted.</p>
-<pre class="highlight">type <span class="s1">&#39;hello world&#39;</span></pre>
+<pre class="highlight"><span class="n">type</span> <span class="s1">&#39;hello world&#39;</span></pre>
 <p>Some keys have multi-character names or aliases.<br />Wrap them in parentheses.</p>
-<pre class="highlight">type <span class="s1">&#39;foo(tab)bar&#39;</span></pre>
+<pre class="highlight"><span class="n">type</span> <span class="s1">&#39;foo(tab)bar&#39;</span></pre>
 <p>Pause for a short while between sending characters.</p>
-<pre class="highlight">type <span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="ss">:slow</span></pre>
+<pre class="highlight"><span class="n">type</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="ss">:slow</span></pre>
 <h3>Sending key combinations</h3>
 <p>To send key combinations, enclose multiple keys within parentheses and nest them. (S-expressions!)</p>
-<pre class="highlight">type <span class="s1">&#39;(ctrl (shift hi))&#39;</span> <span class="c1"># sends ctrl-down, shift-down, hi, shift-up, ctrl-up</span></pre>
+<pre class="highlight"><span class="n">type</span> <span class="s1">&#39;(ctrl (shift hi))&#39;</span> <span class="c1"># sends ctrl-down, shift-down, hi, shift-up, ctrl-up</span></pre>
 <p>Backslash (\) acts as an escape character</p>
-<pre class="highlight">type <span class="s1">&#39;\(&#39;</span> <span class="c1"># sends a (</span></pre>
+<pre class="highlight"><span class="n">type</span> <span class="s1">&#39;\(&#39;</span> <span class="c1"># sends a (</span></pre>
 <h3>Send string literally, without syntax interpretation</h3>
-<pre class="highlight">type<span class="o">!</span> <span class="s1">&#39;(in brackets)&#39;</span></pre>
+<pre class="highlight"><span class="n">type!</span> <span class="s1">&#39;(in brackets)&#39;</span></pre>
 <h3>Translations</h3>
 <p>Some keys are translated into key combinations.</p>
-<pre class="highlight">type <span class="s1">&#39;A&#39;</span> <span class="c1"># sends &#39;(shift a)&#39;</span></pre>
+<pre class="highlight"><span class="n">type</span> <span class="s1">&#39;A&#39;</span> <span class="c1"># sends &#39;(shift a)&#39;</span></pre>
 <p>See Rum.layout.translations</p>
 <h3>Sending single keyboard events</h3>
 <pre class="highlight"><span class="no">System</span><span class="o">.</span><span class="n">keydown</span> <span class="s1">&#39;a&#39;</span>
 <span class="no">System</span><span class="o">.</span><span class="n">keyup</span> <span class="s1">&#39;a&#39;</span></pre>
 <p>In a future release, this might be integrated into the main keyboard syntax, like:</p>
-<pre class="highlight">type <span class="s1">&#39;(keydown a)&#39;</span></pre>
+<pre class="highlight"><span class="n">type</span> <span class="s1">&#39;(keydown a)&#39;</span></pre>
 <h3>Auto-release</h3>
 <p>Pressed core modifiers are released before keyboard input is generated.<br />You can safely do the following:</p>
-<pre class="highlight"><span class="s1">&#39;ctrl a&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> type <span class="s1">&#39;w&#39;</span> <span class="p">}</span> <span class="c1"># &#39;ctrl&#39; gets released before &#39;w&#39; is sent.</span></pre>
+<pre class="highlight"><span class="s1">&#39;ctrl a&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="n">type</span> <span class="s1">&#39;w&#39;</span> <span class="p">}</span> <span class="c1"># &#39;ctrl&#39; gets released before &#39;w&#39; is sent.</span></pre>
 <p>Provide the :blind flag to bypass auto-releasing</p>
-<pre class="highlight"><span class="s1">&#39;ctrl a&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> type <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="ss">:blind</span> <span class="p">}</span> <span class="c1"># &#39;ctrl&#39; might still be pressed when &#39;w&#39; is sent.</span></pre>
+<pre class="highlight"><span class="s1">&#39;ctrl a&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="n">type</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="ss">:blind</span> <span class="p">}</span> <span class="c1"># &#39;ctrl&#39; might still be pressed when &#39;w&#39; is sent.</span></pre>
+<h3>Windows-specific: Unicode input</h3>
+<p>Sends unicode input. Supports the key combination syntax from 'type'.</p>
+<pre class="highlight"><span class="n">type_unicode</span> <span class="s1">&#39;۩—↑ (ctrl ۞)&#39;</span></pre>
 <h3>Windows-specific: Extended keys</h3>
 <p>Sends 'alt' with the 'extended' flag set.</p>
-<pre class="highlight">type <span class="s1">&#39;(alt-extended)&#39;</span></pre>
+<pre class="highlight"><span class="n">type</span> <span class="s1">&#39;(alt-extended)&#39;</span></pre>
 </div>
 <div class="chapter">
-<a name="chapter_5"><h1>3. Gui</h1></a>
+<a name="chapter_5"><h1>5. Gui</h1></a>
 
 <h3>Messages</h3>
 <p>Prints a non-disruptive notification when Growl is enabled, falls back to alert (see below)  otherwise</p>
@@ -420,14 +425,14 @@ Call <span class="code">Rum.reference</span> or manually open
 <span class="o">.</span><span class="n">.</span><span class="o">.</span></pre>
 </div>
 <div class="chapter">
-<a name="chapter_6"><h1>4. Get selected text</h1></a>
+<a name="chapter_6"><h1>6. Get selected text</h1></a>
 
 <h2>Caveat: Not yet available on the Mac.</h2>
 <p>Grabs the currently selected text.</p>
 <pre class="highlight"><span class="n">get_selection</span> <span class="c1"># returns the current selection or nil</span></pre>
 </div>
 <div class="chapter">
-<a name="chapter_7"><h1>5. Clipboard</h1></a>
+<a name="chapter_7"><h1>7. Clipboard</h1></a>
 
 <h2>Caveat: Not yet available on the Mac.</h2>
 <p>Retrieves the clipboard contents as text.</p>
@@ -448,7 +453,7 @@ Call <span class="code">Rum.reference</span> or manually open
 <span class="no">Clipboard</span><span class="o">.</span><span class="n">get</span> <span class="c1">#=&gt; &quot;foo&quot;</span></pre>
 </div>
 <div class="chapter">
-<a name="chapter_8"><h1>6. More methods</h1></a>
+<a name="chapter_8"><h1>8. More methods</h1></a>
 
 <h3>Waiting</h3>
 <p>Wait until condition is true. Times out after 5 seconds, updates every 0.01 seconds.</p>
@@ -474,19 +479,19 @@ Call <span class="code">Rum.reference</span> or manually open
 <span class="no">System</span><span class="o">.</span><span class="n">applescript</span></pre>
 </div>
 <div class="chapter">
-<a name="chapter_9"><h1>6. Rum's threading model</h1></a>
+<a name="chapter_9"><h1>9. Rum's threading model</h1></a>
 
-<p>Rum employs one worker thread that executes all hotkey actions sequentially.<br />Errors during execution are automatically reported via Gui.message.<br /><br />If you have a long running action that may run in parallel with other actions call 'Rum.switch_worker_thread'. Action execution is then resumed on another thread.</p>
+<p>Rum employs one worker thread that executes all hotkey actions sequentially.<br />Errors during execution are automatically reported via Gui.message.<br /><br />If you have a long running action that may run in parallel with other actions call 'Rum.switch_worker_thread'. Action execution is then resumed in another thread.</p>
 <pre class="highlight"><span class="s1">&#39;ctrl a&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="no">Rum</span><span class="o">.</span><span class="n">switch_worker_thread</span><span class="p">;</span> <span class="n">long_running_stuff</span> <span class="p">}</span></pre>
 <p>The following is also possible...</p>
 <pre class="highlight"><span class="s1">&#39;ctrl a&#39;</span><span class="o">.</span><span class="n">do</span> <span class="p">{</span> <span class="no">Thread</span><span class="o">.</span><span class="n">new</span> <span class="p">{</span> <span class="n">long_running_stuff</span> <span class="p">}</span> <span class="p">}</span></pre>
 <p>... but errors in 'long_running_stuff' won't be implicitly caught and reported by Rum.<br /><br />When you call Gui.read, Gui.alert or Gui.print then Rum.switch_worker_thread is automatically run.</p>
 </div>
 <div class="chapter">
-<a name="chapter_10"><h1>5. Help, introspection</h1></a>
+<a name="chapter_10"><h1>10. Help, introspection</h1></a>
 
 <p>Prompts you to enter a hotkey and then jumps to its definition via Gui.open_file.</p>
-<pre class="highlight"><span class="no">Rum</span><span class="o">.</span><span class="n">show_hotkey</span></pre>
+<pre class="highlight"><span class="no">Rum</span><span class="o">.</span><span class="n">visit_hotkey</span></pre>
 <p>(Requires you to register your text-editor, see Gui.open_file above.)<br /><br />Asks you to enter an arbitrary hotkey and inserts a hotkey definition snippet via Keyboard.type.<br />When 'shift a' is pressed, 'shift a'.do { } is inserted.</p>
 <pre class="highlight"><span class="no">Rum</span><span class="o">.</span><span class="n">snippet</span></pre>
 <p>Reads a hotkey and passes it to the block.<br />(Internally used by Rum.snippet)</p>
@@ -497,7 +502,7 @@ Call <span class="code">Rum.reference</span> or manually open
 <pre class="highlight"><span class="no">Rum</span><span class="o">.</span><span class="n">reference</span></pre>
 </div>
 <div class="chapter">
-<a name="chapter_11"><h1>5. Restarting, server</h1></a>
+<a name="chapter_11"><h1>11. Restarting, server</h1></a>
 
 <p>Restart the current Rum configuration.</p>
 <pre class="highlight"><span class="no">Rum</span><span class="o">.</span><span class="n">restart</span></pre>
@@ -505,7 +510,7 @@ Call <span class="code">Rum.reference</span> or manually open
 <pre class="highlight"><span class="no">Rum</span><span class="o">::</span><span class="no">Server</span><span class="o">.</span><span class="n">start</span></pre>
 </div>
 <div class="chapter">
-<a name="chapter_12"><h1>6. Windows</h1></a>
+<a name="chapter_12"><h1>12. Windows</h1></a>
 
 <h2>Caveat: Not yet available on the Mac.</h2>
 <h3>Retrieving windows</h3>
@@ -516,9 +521,9 @@ Call <span class="code">Rum.reference</span> or manually open
 <span class="n">active_windows</span><span class="o">.</span><span class="n">map</span> <span class="o">&amp;</span><span class="ss">:title</span></pre>
 <h3>Window Matchers</h3>
 <p>WindowMatchers serve as a shorthand for using active_windows.find:</p>
-<pre class="highlight"><span class="n">matcher</span> <span class="o">=</span> <span class="no">Window</span><span class="o">[</span><span class="n">title</span><span class="p">:</span><span class="sr"> /ruby/</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="s1">&#39;MozillaUIWindowClass&#39;</span><span class="o">]</span></pre>
+<pre class="highlight"><span class="n">matcher</span> <span class="o">=</span> <span class="no">Window</span><span class="o">[</span><span class="n">title</span><span class="p">:</span> <span class="sr">/ruby/</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="s1">&#39;MozillaUIWindowClass&#39;</span><span class="o">]</span></pre>
 <p>or shorter:</p>
-<pre class="highlight"><span class="n">matcher</span> <span class="o">=</span> <span class="no">Window</span><span class="o">[/</span><span class="n">ruby</span><span class="o">/</span><span class="p">,</span> <span class="s1">&#39;MozillaUIWindowClass&#39;</span><span class="o">]</span>
+<pre class="highlight"><span class="n">matcher</span> <span class="o">=</span> <span class="no">Window</span><span class="o">[</span><span class="sr">/ruby/</span><span class="p">,</span> <span class="s1">&#39;MozillaUIWindowClass&#39;</span><span class="o">]</span>
 <span class="n">matcher</span>      <span class="c1">#=&gt; #&lt;Rum::System::WindowMatcher...&gt;</span>
 <span class="n">matcher</span><span class="o">.</span><span class="n">find</span> <span class="c1">#=&gt; #&lt;Rum::System::Window...&gt;</span>
 <span class="no">Window</span><span class="o">[</span><span class="n">class_name</span><span class="p">:</span> <span class="s1">&#39;Emacs&#39;</span><span class="o">].</span><span class="n">find</span></pre>
@@ -534,9 +539,18 @@ Call <span class="code">Rum.reference</span> or manually open
 <span class="n">w</span><span class="o">.</span><span class="n">class_name</span> <span class="c1">#=&gt; &quot;Chrome_WidgetWin_0&quot;</span>
 <span class="n">w</span><span class="o">.</span><span class="n">close</span>
 <span class="n">w</span><span class="o">.</span><span class="n">kill_task</span> <span class="c1"># kills the task associated with the window</span></pre>
+<h3>Child windows</h3>
+<p>Enumerate all child windows</p>
+<pre class="highlight"><span class="n">w</span> <span class="o">=</span> <span class="n">active_window</span>
+<span class="n">w</span><span class="o">.</span><span class="n">child_windows</span> <span class="p">{</span> <span class="o">|</span><span class="n">child</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">child</span><span class="o">.</span><span class="n">class_name</span> <span class="p">}</span>
+<span class="n">w</span><span class="o">.</span><span class="n">child_windows</span> <span class="c1"># =&gt; #&lt;Enumerator: ...&gt;</span></pre>
+<p>Get child window by class name. Pattern can be a regex or a string (for exact matches).</p>
+<pre class="highlight"><span class="n">w</span><span class="o">.</span><span class="n">child_window</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span></pre>
+<p>Example: Activate Evernote's search field</p>
+<pre class="highlight"><span class="no">Evernote</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">child_window</span><span class="p">(</span><span class="s1">&#39;ENAutoCompleteEditCtrl&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span></pre>
 </div>
 <div class="chapter">
-<a name="chapter_13"><h1>7. Apps</h1></a>
+<a name="chapter_13"><h1>13. Apps</h1></a>
 
 <p>Integrates prominent applications into Rum.</p>
 <pre class="highlight">require <span class="s1">&#39;rum/apps&#39;</span></pre>
