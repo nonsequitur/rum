@@ -5,7 +5,7 @@
 	id delegate;
 }
 -(id)init;
--(Event*)handleEvent:(Event*)event;
+-(Event*)handleKeyEvent:(Event*)event;
 @end
 
 CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *eventTapObject);

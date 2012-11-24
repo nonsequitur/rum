@@ -33,7 +33,7 @@ CFMachPortRef keyboard_event_tap;
 	return self;
 }
 
--(Event*)handleEvent:(Event*)event {
+-(Event*)handleKeyEvent:(Event*)event {
 	// to be overridden by ruby code
 	return event;
 }
@@ -73,5 +73,5 @@ CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type,
     return event;
   }
 
-  return [((id) eventTapObject) handleEvent:[[Event alloc] initWithEventRef:event tapProxy:proxy type:type down:is_down]].eventRef;
+  return [((id) eventTapObject) handleKeyEvent:[[Event alloc] initWithEventRef:event tapProxy:proxy type:type down:is_down]].eventRef;
 }

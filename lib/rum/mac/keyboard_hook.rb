@@ -16,7 +16,7 @@ module KeyboardHook
 end
 
 class EventTap
-  def handleEvent(event)
+  def handleKeyEvent(event)
     event if @proc.call(event)
   end
 
