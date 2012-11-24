@@ -5,16 +5,16 @@ CLEAN.include('ext/windows/keyboard_hook/*',
               'ext/mac/keyboard_hook/build',
               '*.gem',
               '**/.DS_Store')
-CLEAN.exclude('.c', '.h', 'extconf.rb')
+CLEAN.exclude(/\.c$/, /\.h$/, /extconf\.rb/)
 
 CLOBBER.include('lib/rum/windows/keyboard_hook.so',
                 'lib/rum/windows/system.so',
                 'lib/rum/mac/keyboard_hook/KeyboardHook.framework',
                 'doc/doc.html')
 
-MAC_BINARIES = ['lib/rum/mac/keyboard_hook/KeyboardHook.framework',
-                'lib/rum/mac/gui/Growl.framework',
-                'lib/rum/mac/gui/CocoaDialog.app']
+MAC_BINARIES = [Regexp.new('lib/rum/mac/keyboard_hook/KeyboardHook.framework'),
+                Regexp.new('lib/rum/mac/gui/Growl.framework'),
+                Regexp.new('lib/rum/mac/gui/CocoaDialog.app')]
 
 WINDOWS_BINARIES = ['lib/rum/windows/keyboard_hook.so',
                     'lib/rum/windows/system.so']
