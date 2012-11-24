@@ -1,4 +1,8 @@
-framework "ApplicationServices"
+framework 'CoreGraphics' # OS X 10.8 location for kCGKeyboardEventKeycode and related symbols
+unless defined? KCGKeyboardEventKeycode
+  framework 'ApplicationServices' # 10.7 location
+end
+
 framework "#{File.dirname(__FILE__)}/keyboard_hook/KeyboardHook.framework"
 framework 'Cocoa'
 
