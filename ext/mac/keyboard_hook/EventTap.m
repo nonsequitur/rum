@@ -22,11 +22,11 @@ CFMachPortRef keyboard_event_tap;
 -(id)init {
 	[super init];
 	keyboard_event_tap = CGEventTapCreate(kCGHIDEventTap,
-                                              kCGHeadInsertEventTap,
-                                              kCGEventTapOptionDefault,
-                                              CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventKeyUp) | CGEventMaskBit(kCGEventFlagsChanged),
-                                              &eventCallback,
-                                              self);
+                                          kCGHeadInsertEventTap,
+                                          kCGEventTapOptionDefault,
+                                          CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventKeyUp) | CGEventMaskBit(kCGEventFlagsChanged),
+                                          &eventCallback,
+                                          self);
 	CFRunLoopSourceRef tapSource = CFMachPortCreateRunLoopSource(NULL, keyboard_event_tap, 0);
 	CFRunLoopAddSource((CFRunLoopRef) [[NSRunLoop currentRunLoop] getCFRunLoop], tapSource, kCFRunLoopCommonModes);
 
