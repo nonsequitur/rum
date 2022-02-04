@@ -3,7 +3,7 @@
 A cross-platform hotkey and macro utility, running on Windows and Mac
 OS.
 
-Visit http://nonsequitur.github.com/rum for examples and a detailed
+Visit http://nonsequitur.github.io/rum for examples and a detailed
 reference.
 
 ## Synopsis
