@@ -3,15 +3,17 @@
 A cross-platform hotkey and macro utility, running on Windows and Mac
 OS.
 
-Visit http://nonsequitur.github.com/rum for examples and a detailed
+Visit http://nonsequitur.github.io/rum for examples and a detailed
 reference.
 
 ## Synopsis
-    require 'rum'
-    Rum.layout.modifier 'caps'
-    'caps f1'.do { message 'foo' }
-    'caps shift f1'.do { message 'bar' }
-    Rum.start
+```ruby
+require 'rum'
+Rum.layout.modifier 'caps'
+'caps f1'.do { message 'foo' }
+'caps shift f1'.do { message 'bar' }
+Rum.start
+```
 
 ## License
 Rum is available under the MIT license
